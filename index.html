@@ -6,106 +6,6 @@
     <title>Le Dritte del Prof</title>
     <style>
      
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{
-  /* COLORI TEMA BLU AGGIORNATI */
-  --bg:#f4f5f7; --card:#ffffff; 
-  --dark:#0A3654; --dark2:#082b43; /* Blu scuro principale */
-  --accent:#0070ba; --accent2:#005a96; /* Blu acceso */
-  --txt:#1A2C43; --txt2:#8a939e; --txt3:#b0b7c0;
-  --border:#e2e6eb; --sw:270px;
-  --primary: #0A3654;
-  --accent-blue: #0070ba;
-  --bg-app: #f4f5f7;
-  --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
-}
-
-html,body{font-family:'Roboto',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:70px}
-
-/* --- IL TUO CSS ORIGINALE PER NASCONDERE LA SIDEBAR E IMPAGINARE --- */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;backdrop-filter:blur(3px)}
-.overlay.open{display:block}
-.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sw);background:var(--dark);z-index:300;transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden}
-.sidebar.open{transform:translateX(0)}
-.sb-head{padding:calc(44px + var(--sat)) 20px 16px;background:var(--dark2);border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
-.sb-logo-img{height:3.636em;width:auto;max-width:17.273em;object-fit:contain;display:block}
-.sb-update{font-size:0.923em;color:rgba(255,255,255,.3);margin-top:0.545em}
-.sb-nav{flex:1;overflow-y:auto;padding:8px 0 calc(20px + var(--sab))}
-.sb-group{font-size:0.846em;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.25);padding:1.273em 1.818em 0.364em}
-.sb-item{width:100%;display:flex;align-items:center;gap:1.091em;padding:1.273em 1.818em;background:none;border:none;color:rgba(255,255,255,.65);font-size:1.308em;font-weight:500;cursor:pointer;text-align:left;transition:all .15s;position:relative}
-.sb-icon{width:3.091em;height:3.091em;border-radius:0.727em;display:flex;align-items:center;justify-content:center;font-size:1.308em;flex-shrink:0;background:rgba(255,255,255,.06)}
-.sb-item.active{color:#fff}
-.sb-item.active .sb-icon{background:var(--accent)}
-.sb-item.active::before{content:'';position:absolute;left:0;top:0.545em;bottom:0.545em;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
-.main{padding-top:var(--hh,130px)}
-.feed{padding:14px 14px calc(50px + var(--sab))}
-.section{display:none}
-.section.active{display:block}
-
-/* --- NUOVO HEADER APP STILE SCREENSHOT --- */
-.app-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg-app);padding-top:var(--sat);box-shadow:0 2px 5px rgba(0,0,0,0.05)}
-.app-header-new { background: var(--primary); color: #fff; padding: 15px; display: flex; align-items: center; font-size: 20px; font-weight: 500; }
-.app-header-new .hbg { background: transparent; border: none; margin-right: 15px; cursor: pointer; display:flex; flex-direction:column; gap:4px;}
-.app-header-new .hbg-line { width: 22px; height: 2px; background: #fff; border-radius: 2px; }
-
-/* --- BARRA DATE SCORREVOLE --- */
-.hdr-dates-app { display: flex; background: #fff; overflow-x: auto; border-bottom: 1px solid #e2e6eb; scrollbar-width: none; }
-.hdr-dates-app::-webkit-scrollbar { display: none; }
-.date-box { flex: 0 0 70px; display: flex; flex-direction: column; align-items: center; padding: 12px 0; cursor: pointer; border-top: 4px solid transparent; color: var(--txt); transition: 0.2s; }
-.date-box.active { background: var(--primary); color: #fff; border-top: 4px solid var(--accent-blue); }
-.date-day { font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
-.date-num { font-size: 18px; font-weight: 800; }
-
-/* --- FILTRI CHIPS --- */
-.app-filters { padding: 10px 15px; background: #fff; display: flex; gap: 10px; overflow-x: auto; border-bottom: 1px solid #e2e6eb; }
-.app-filters::-webkit-scrollbar { display: none; }
-.chip-filter { background: #f0f2f5; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--txt); white-space: nowrap; cursor:pointer;}
-
-/* --- NUOVA CARD PARTITA --- */
-.league-hdr-app { background: transparent; padding: 15px 15px 8px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--txt); }
-.bm-match { display: flex; background: #fff; margin: 0 10px 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 12px 0; }
-.bm-left { width: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #f0f2f5; flex-shrink: 0; }
-.bm-star { color: #b0b7c0; font-size: 20px; margin-bottom: 8px; }
-.bm-time { background: var(--primary); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
-.bm-center { flex: 1; padding: 0 12px; display: flex; flex-direction: column; justify-content: center; gap: 10px; min-width:0; }
-.bm-team { display: flex; align-items: center; font-size: 14px; font-weight: 600; color: #1A2C43; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.bm-team img { width: 20px; height: 20px; object-fit: contain; margin-right: 10px; flex-shrink:0; }
-.bm-score { margin-left: auto; font-weight: 700; color: #1A2C43; }
-.bm-right { display: flex; align-items: center; padding-right: 12px; gap: 15px; text-align: center; flex-shrink:0; }
-.bm-prob { font-size: 12px; color: #8a939e; width: 35px; }
-.bm-pick { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 75px; }
-.bm-pick-lbl { font-size: 10px; color: #8a939e; line-height: 1.2; text-align: center; }
-.bm-pick-val { font-size: 13px; font-weight: 800; color: var(--accent-blue); margin-top: 2px; } 
-.bm-quota { font-size: 14px; font-weight: 700; color: #1A2C43; width: 35px; text-align: right; }
-
-/* --- BOTTOM NAV --- */
-.op-bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0 calc(8px + var(--sab));border-top:1px solid var(--border);z-index:400;}
-.op-bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--txt2);font-size:10px;font-weight:500;text-decoration:none;cursor:pointer;background:none;border:none}
-.op-bn-item.active{color:var(--accent)}
-.op-bn-icon{font-size:20px;line-height:1}
-
-/* UTILS E LOADER */
-.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7.273em 1.818em;text-align:center}
-.spinner{width:3.455em;height:3.455em;border:3px solid #e0e0ea;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-
-/* --- PERSONALIZZAZIONE WIDGET API-FOOTBALL --- */
-api-sports-widget {
-  /* Colori principali */
-  --primary-color: #0A3654;      /* Il tuo blu scuro per gli header del widget */
-  --secondary-color: #0070ba;    /* Il tuo blu acceso per bottoni/dettagli */
-  
-  /* Sfondo e testo */
-  --background-color: #ffffff;   /* Sfondo bianco come le tue card */
-  --text-color: #1A2C43;         /* Il tuo colore del testo scuro */
-  
-  /* Font */
-  --font-family: 'Roboto', sans-serif; 
-  
-  /* Arrotondamento bordi per farlo sembrare come le tue card */
-  --border-radius: 8px;
-}
 
     /* ── SofaScore widget wrapper ── */
     .sofascore-widget-wrap {
@@ -197,8 +97,1647 @@ api-sports-widget {
     </div>
 
     <script>
-        /* INCOLLA QUI IL TUO JAVASCRIPT */
-        console.log("App caricata correttamente");
-    </script>
+
+// ═══════════════════════════════════════════════════════
+// SOFASCORE WIDGET CONTROLLER
+// ═══════════════════════════════════════════════════════
+
+
+
+// IDs tornei SofaScore (uniqueTournamentId)
+var SS_LEAGUES = {
+  'all':        null,   // nessun filtro = tutti i tornei del giorno
+  'serie-a':    23,
+  'premier':    17,
+  'laliga':     8,
+  'bundesliga': 35,
+  'ligue1':     34,
+  'champions':  7,
+  'europa':     679
+};
+
+var _ssCurrentDate   = new Date();
+var _ssCurrentLeague = 'all';
+
+function _ssFormatDate(d) {
+  var yr  = d.getFullYear();
+  var mo  = ('0' + (d.getMonth()+1)).slice(-2);
+  var day = ('0' + d.getDate()).slice(-2);
+  return yr + '-' + mo + '-' + day;
+}
+
+
+
+function _ssBuildIframeSrc(date, leagueKey) {
+  // Base URL del widget SofaScore Fixtures
+  // Per generare un URL specifico per i tuoi tornei preferiti vai su:
+  // https://widgets.sofascore.com/config/fixtures
+  var base = 'https://widgets.sofascore.com/embed/fixtures?sport=football&theme=dark&lang=it';
+  if (date) base += '&date=' + date;
+  var tid = SS_LEAGUES[leagueKey];
+  if (tid) base += '&uniqueTournamentId=' + tid;
+  return base;
+}
+
+function _ssUpdateWidget() {
+  var iframe = document.getElementById('sofascore-fixtures-iframe');
+  if (!iframe) return;
+  var dateStr = _ssFormatDate(_ssCurrentDate);
+  iframe.src  = _ssBuildIframeSrc(dateStr, _ssCurrentLeague);
+
+  // Aggiorna anche label data
+  var now = new Date();
+  var label = document.getElementById('ssDateLabel');
+  if (label) {
+    var isToday = _ssCurrentDate.getDate()  === now.getDate() &&
+                  _ssCurrentDate.getMonth() === now.getMonth();
+    if (isToday) {
+      label.textContent = 'OGGI · ' + dateStr;
+    } else {
+      var giorni = ['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+      label.textContent = giorni[_ssCurrentDate.getDay()] + ' ' + dateStr;
+    }
+  }
+}
+
+function ssShiftDate(delta) {
+  _ssCurrentDate = new Date(
+    _ssCurrentDate.getFullYear(),
+    _ssCurrentDate.getMonth(),
+    _ssCurrentDate.getDate() + delta
+  );
+  _ssUpdateWidget();
+}
+
+function ssSelectLeague(btn, leagueKey) {
+  document.querySelectorAll('.ss-league-tab').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _ssCurrentLeague = leagueKey;
+  _ssUpdateWidget();
+}
+
+function ssReloadWidget() {
+  // Forza reload dell'iframe aggiungendo un timestamp
+  var iframe = document.getElementById('sofascore-fixtures-iframe');
+  if (!iframe) return;
+  var dateStr = _ssFormatDate(_ssCurrentDate);
+  iframe.src = _ssBuildIframeSrc(dateStr, _ssCurrentLeague) + '&_t=' + Date.now();
+}
+
+// ═══════════════════════════════════════════════════════
+// FETCH PARTITE LIVE/OGGI — backend GAS (fallback)
+// ═══════════════════════════════════════════════════════
+var _liveData = [];
+
+function caricaPartiteOggi() {
+  var container = document.getElementById('live-games-container');
+  if (!container) return;
+
+  if (!IS_GAS) {
+    renderPartiteOggi([], new Date().toISOString().slice(0,10));
+    return;
+  }
+
+  google.script.run
+    .withSuccessHandler(function(r) {
+      if (r && r.success) {
+        _liveData = r.data || [];
+        // Mostra solo se il widget SofaScore non è disponibile
+        renderPartiteOggi(r.data, r.date);
+      }
+    })
+    .withFailureHandler(function(e) {
+      console.warn('GAS partiteOggi:', e);
+    })
+    .getFixturesToday();
+}
+
+function buildDatePillsStatic() {
+  var container = document.getElementById('hdrDatesApp');
+  if (!container) return;
+  var now = new Date();
+  var h = '';
+  for (var i = -1; i <= 4; i++) {
+    var d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
+    var isToday = (i === 0);
+    var giorni = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
+    var giornoStr = isToday ? 'OGGI' : giorni[d.getDay()];
+    var ds = pad(d.getDate()) + '/' + pad(d.getMonth()+1);
+    var dataApi = d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate());
+    h += '<div class="date-box ' + (isToday ? 'active' : '') + '" data-d="' + ds + '" data-date="' + dataApi + '" onclick="filterDate(this)">' +
+         '<span class="date-day">' + giornoStr + '</span>' +
+         '<span class="date-num">' + d.getDate() + '</span>' +
+         '</div>';
+  }
+  container.innerHTML = h;
+}
+
+function renderPartiteOggi(fixtures, dataStr) {
+  var container = document.getElementById('live-games-container');
+  if (!container) return;
+  if (!fixtures || !fixtures.length) return; // se vuoto non mostrare il container GAS
+
+  container.style.display = 'block';
+
+  var byLeague = {};
+  fixtures.forEach(function(f) {
+    var lname = f.league.name;
+    if (!byLeague[lname]) byLeague[lname] = { league: f.league, fixtures: [] };
+    byLeague[lname].fixtures.push(f);
+  });
+
+  var h = '<div style="padding: 0 0 60px;">';
+  Object.values(byLeague).forEach(function(group) {
+    var lg = group.league;
+    h += '<div class="league-hdr-app">' +
+      '<img src="' + lg.logo + '" style="width:20px;height:20px;object-fit:contain">' +
+      '<span style="margin-left:6px">' + lg.name + '</span>' +
+      '<span style="color:#aaa;font-size:11px;margin-left:4px">· ' + lg.country + '</span>' +
+    '</div>';
+    group.fixtures.forEach(function(f, i) {
+      var s = f.fixture.status;
+      var home = f.teams.home, away = f.teams.away, goals = f.goals;
+      var statusLabel = '', statusColor = '#888';
+      if (s.short === 'NS') {
+        var d = new Date(f.fixture.date);
+        statusLabel = pad(d.getHours()) + ':' + pad(d.getMinutes());
+        statusColor = '#0A3654';
+      } else if (s.short === 'FT' || s.short === 'AET' || s.short === 'PEN') {
+        statusLabel = 'FT'; statusColor = '#888';
+      } else if (s.short === 'HT') {
+        statusLabel = 'HT'; statusColor = '#e67e22';
+      } else if (s.elapsed) {
+        statusLabel = s.elapsed + "'"; statusColor = '#e74c3c';
+      } else { statusLabel = s.short; }
+
+      var isLive = ['1H','2H','ET','P','HT'].indexOf(s.short) !== -1;
+      var scoreHome = goals.home !== null ? goals.home : '-';
+      var scoreAway = goals.away !== null ? goals.away : '-';
+
+      h += '<div class="bm-match" style="animation-delay:' + (i*0.04) + 's' + (isLive ? ';border-left:3px solid #e74c3c' : '') + '">' +
+        '<div class="bm-left">' +
+          '<div class="bm-time" style="background:' + statusColor + ';font-size:10px">' + statusLabel + '</div>' +
+          (isLive ? '<div style="font-size:9px;color:#e74c3c;font-weight:700;margin-top:4px">LIVE</div>' : '') +
+        '</div>' +
+        '<div class="bm-center">' +
+          '<div class="bm-team"><img src="' + home.logo + '" style="width:20px;height:20px;object-fit:contain;margin-right:8px" onerror="this.style.display=\'none\'"><span style="flex:1">' + home.name + '</span><span class="bm-score" style="' + (home.winner ? 'color:#22c55e;font-weight:900' : '') + '">' + scoreHome + '</span></div>' +
+          '<div class="bm-team"><img src="' + away.logo + '" style="width:20px;height:20px;object-fit:contain;margin-right:8px" onerror="this.style.display=\'none\'"><span style="flex:1">' + away.name + '</span><span class="bm-score" style="' + (away.winner ? 'color:#22c55e;font-weight:900' : '') + '">' + scoreAway + '</span></div>' +
+        '</div>' +
+      '</div>';
+    });
+  });
+  h += '</div>';
+  container.innerHTML = h;
+}
+
+// ═══════════════════════════════════════════════════════
+// FONT SIZE
+// ═══════════════════════════════════════════════════════
+var _fontBase = 7;
+function _applyFont(){
+  document.documentElement.style.fontSize = _fontBase + 'px';
+  try { localStorage.setItem('dritte_font', _fontBase); } catch(e) {}
+  requestAnimationFrame(updateHeaderHeight);
+}
+function aumentaFont(){ _fontBase = Math.min(21, _fontBase+2); _applyFont(); }
+function riduciFont(){ var m = _isDesktop() ? 11 : 5; _fontBase = Math.max(m, _fontBase-2); _applyFont(); }
+function _isDesktop(){ return window.matchMedia('(min-width:768px) and (pointer:fine)').matches; }
+(function(){
+  try {
+    var d = window.matchMedia('(min-width:768px) and (pointer:fine)').matches;
+    var def = d ? 15 : 9;
+    var s = parseInt(localStorage.getItem('dritte_font') || String(def));
+    if (s >= 5 && s <= 21) { _fontBase = s; document.documentElement.style.fontSize = s + 'px'; }
+    else { _fontBase = def; document.documentElement.style.fontSize = def + 'px'; }
+  } catch(e) {}
+})();
+
+// ═══════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════
+var LEAGUE_FLAGS = {
+  'serie a':'🇮🇹','serie b':'🇮🇹','ligue 1':'🇫🇷','ligue 2':'🇫🇷',
+  'premier league':'🏴','laliga':'🇪🇸','la liga':'🇪🇸',
+  'bundesliga':'🇩🇪','2. bundesliga':'🇩🇪','eredivisie':'🇳🇱',
+  'eerste':'🇳🇱','swiss super league':'🇨🇭','swiss league':'🇨🇭',
+  'süper lig':'🇹🇷','super lig':'🇹🇷','danish superliga':'🇩🇰',
+  'pro league':'🇧🇪','primeira liga':'🇵🇹',
+  'champions league':'🏆','europa league':'🏆','conference league':'🏆',
+  'saudi pro league':'🇸🇦','scottish premiership':'🏴',
+  'austrian bundesliga':'🇦🇹','super league':'🇬🇷'
+};
+function getFlag(m){
+  if(!m)return'🏆';
+  if(m.flag&&m.flag.trim()&&m.flag.trim()!=='🏆')return m.flag.trim();
+  var c=(m.campionato||'').toLowerCase().trim();
+  if(!c)return'🏆';
+  if(LEAGUE_FLAGS[c])return LEAGUE_FLAGS[c];
+  for(var k in LEAGUE_FLAGS)if(c.includes(k)||k.includes(c))return LEAGUE_FLAGS[k];
+  return'🏆';
+}
+function np(v){if(typeof v!=='number'||v<=0)return 0;return v>0&&v<=1?Math.round(v*100):Math.round(v);}
+function nds(raw){
+  if(!raw)return'-';
+  if(typeof raw==='string'){if(raw.includes('GMT')||raw.includes('T')){var d=new Date(raw);if(!isNaN(d.getTime()))return pad(d.getDate())+'/'+pad(d.getMonth()+1)}return raw;}
+  if(raw instanceof Date&&!isNaN(raw.getTime()))return pad(raw.getDate())+'/'+pad(raw.getMonth()+1);
+  return String(raw);
+}
+function nora(raw,dataRaw){
+  if(raw&&typeof raw==='string'&&raw!=='-'&&!raw.includes('GMT')&&!raw.includes('T'))return raw;
+  var src=raw||dataRaw;if(src){var d=new Date(src);if(!isNaN(d.getTime()))return pad(d.getHours())+':'+pad(d.getMinutes());}
+  return'-';
+}
+function pad(n){return('0'+n).slice(-2);}
+function probBarColor(p){if(p>=75)return'#c8f135';if(p>=65)return'#22c55e';if(p>=55)return'#3b82f6';return'#f97316';}
+function getMBClass(m){
+  var s=(m||'').toLowerCase();
+  if(s==='1x2')return'sa-mb-1x2';if(s==='o/u'||s.includes('over'))return'sa-mb-ou';
+  if(s==='gg/ng')return'sa-mb-ggng';if(s.includes('corner'))return'sa-mb-corner';
+  if(s.includes('card'))return'sa-mb-cards';if(s.includes('mg'))return'sa-mb-mg';
+  return'sa-mb-default';
+}
+function emp(ico,txt){return'<div class="empty"><div class="empty-ico">'+ico+'</div><div class="empty-txt">'+txt+'</div></div>';}
+function qDisplay(m){
+  if(m.quota&&m.quota>1)return{val:typeof m.quota.toFixed==='function'?m.quota.toFixed(2):m.quota,isReal:!!m.quotaReale&&m.quotaReale>1};
+  if(m.quotaReale&&m.quotaReale>1)return{val:m.quotaReale.toFixed(2),isReal:true};
+  var p=np(m.prob);if(!p)return{val:'-',isReal:false};
+  return{val:(100/p).toFixed(2),isReal:false};
+}
+function groupByLeague(arr){
+  var map={};
+  arr.forEach(function(m){var n=m.campionato||'Altro';if(!map[n])map[n]={flag:getFlag(m),name:n,matches:[]};map[n].matches.push(m);});
+  return Object.values(map);
+}
+
+// ═══════════════════════════════════════════════════════
+// FILTRO PARTITE FUTURE + SOLO OGGI
+// ═══════════════════════════════════════════════════════
+function isPartitaFutura(m){
+  try{
+    var ds=m.dataStr||m.data;
+    if(typeof ds==='string'&&(ds.includes('T')||ds.includes('GMT'))){var d=new Date(ds);if(!isNaN(d.getTime()))return d>new Date();}
+    var dsStr=nds(ds),ora=nora(m.oraStr,ds);
+    if(!dsStr||dsStr==='-')return true;
+    var pts=dsStr.split('/');if(pts.length<2)return true;
+    var tp=(ora&&ora!=='-')?ora.split(':'):['23','59'];
+    var now=new Date(),yr=now.getFullYear(),mo=parseInt(pts[1])-1;
+    if(mo<now.getMonth()-3)yr++;
+    var kickoff=new Date(yr,mo,parseInt(pts[0]),parseInt(tp[0])||0,parseInt(tp[1])||0,0);
+    return kickoff>now;
+  }catch(e){return true;}
+}
+function isPartitaOggi(m){
+  try{
+    var ds=m.dataStr||m.data;
+    var now=new Date();
+    var dsStr=nds(ds);
+    if(!dsStr||dsStr==='-')return false;
+    var pts=dsStr.split('/');if(pts.length<2)return false;
+    return parseInt(pts[0])===now.getDate()&&parseInt(pts[1])-1===now.getMonth();
+  }catch(e){return false;}
+}
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
+var SECTIONS_WITH_FILTERS=['s-top5','s-top7','s-corner','s-cards','s-mg','s-dcover','s-over25','s-league'];
+var analistaAIData=null, analistaAITs='';
+
+function openSidebar(){document.getElementById('sidebar').classList.add('open');document.getElementById('overlay').classList.add('open');document.body.style.overflow='hidden';}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');document.body.style.overflow='';}
+
+var currentSection = 's-widget-live';
+var activeDateFilter = 'all';
+
+function activateSection(sid) {
+  currentSection = sid;
+  document.querySelectorAll('.section').forEach(function(s){ s.classList.remove('active'); });
+  var el = document.getElementById(sid);
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.op-bn-item').forEach(function(btn) {
+    var oc = btn.getAttribute('onclick');
+    if (oc && oc.indexOf(sid) !== -1) btn.classList.add('active');
+    else btn.classList.remove('active');
+  });
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// ═══════════════════════════════════════════════════════
+// filterDate — UNICA definizione, aggiorna SofaScore iframe
+// ═══════════════════════════════════════════════════════
+function filterDate(btn) {
+  // Evidenzia pill selezionata
+  document.querySelectorAll('.date-box').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+
+  var dataApi  = btn.getAttribute('data-date'); // es. "2026-05-07"
+  var dataProno = btn.getAttribute('data-d');    // es. "07/05"
+
+  // ── Aggiorna iframe SofaScore ──
+  if (dataApi) {
+    var d = new Date(dataApi);
+    _ssCurrentDate = d;
+    _ssUpdateWidget();
+  }
+
+  // ── Aggiorna filtro pronostici interni ──
+  activeDateFilter = dataProno || 'all';
+
+  if (typeof renderTutto === 'function') renderTutto();
+}
+
+function updateHeaderHeight(){var hh=document.getElementById('appHeader').offsetHeight;document.getElementById('mainContent').style.paddingTop=hh+'px';document.getElementById('filterBar').style.top=hh+'px';}
+function goTo(btn){activateSection(btn.dataset.s);closeSidebar();}
+function goToTab(btn){activateSection(btn.dataset.s);}
+
+var adminClicks=0,adminTimer=null;
+function handleAdminClick(){
+  adminClicks++;if(adminTimer)clearTimeout(adminTimer);
+  adminTimer=setTimeout(function(){adminClicks=0;},2000);
+  if(adminClicks===5){document.getElementById('adminPanel').style.display='block';window.scrollTo({top:0,behavior:'smooth'});logAdmin('Dev Mode');adminClicks=0;}
+}
+function logAdmin(msg){var c=document.getElementById('adminConsole');c.innerHTML='['+new Date().toLocaleTimeString()+'] '+msg+'<br>'+c.innerHTML;}
+function runTask(fn,lbl){
+  logAdmin('Avvio: '+lbl+'...');
+  document.querySelectorAll('.admin-btn').forEach(function(b){b.disabled=true;});
+  try{
+    google.script.run
+      .withSuccessHandler(function(){logAdmin('OK: '+lbl);document.querySelectorAll('.admin-btn').forEach(function(b){b.disabled=false;});if(fn==='generaPalinsestoV3')caricaDati();})
+      .withFailureHandler(function(e){logAdmin('ERR: '+(e.message||e));document.querySelectorAll('.admin-btn').forEach(function(b){b.disabled=false;});})[fn]();
+  }catch(e){logAdmin('Non disponibile');document.querySelectorAll('.admin-btn').forEach(function(b){b.disabled=false;});}
+}
+
+function filterMatches(arr){
+  if(activeDateFilter==='all')return arr||[];
+  return(arr||[]).filter(function(m){return nds(m.dataStr||m.data)===activeDateFilter;});
+}
+
+// ═══════════════════════════════════════════════════════
+// DATA SOURCES — allineati con PALINSESTO_V3
+// ═══════════════════════════════════════════════════════
+var DATA_SOURCES=['top5Oggi','top7Prossimi','topSerieA','top7_Corner','top7_Cards',
+  'top7_MGCasa','top7_MGOspite','top10_DCOver','topOver35'];
+var palinsestoData=null;
+var IS_GAS=typeof google!=='undefined'&&typeof google.script!=='undefined';
+
+function _getVal(obj, keys) {
+  for(var k in obj) {
+    var cleanK = k.toLowerCase().replace(/[^a-z0-9]/g, '');
+    for(var i=0; i<keys.length; i++) {
+      if(cleanK === keys[i]) {
+        var val = obj[k];
+        if(val !== null && val !== undefined && val !== '') return String(val);
+      }
+    }
+  }
+  return '-';
+}
+
+function getAllMatches(){
+  if(!palinsestoData) return [];
+  var all=[];
+  var seen = new Set();
+  for(var listName in palinsestoData){
+    if(Array.isArray(palinsestoData[listName])){
+      palinsestoData[listName].forEach(function(m){
+        m.casa = m.casa && m.casa !== '-' ? m.casa : _getVal(m, ['sqcasa', 'casa']);
+        m.ospite = m.ospite && m.ospite !== '-' ? m.ospite : _getVal(m, ['sqospite', 'ospite']);
+        m.dataStr = m.dataStr && m.dataStr !== '-' ? m.dataStr : _getVal(m, ['dataeorapartita', 'dataora', 'datastr', 'data']);
+        m.pronostico = m.pronostico && m.pronostico !== '-' ? m.pronostico : _getVal(m, ['best5combo', 'pronostico', 'best']);
+        var k = m.casa + '_' + m.ospite;
+        if(m.casa !== '-' && !seen.has(k)){seen.add(k);all.push(m);}
+      });
+    }
+  }
+  return all;
+}
+
+function getPartiteOggi(){
+  var all=getAllMatches().filter(isPartitaFutura).filter(isPartitaOggi);
+  var seen={};var res=[];
+  all.forEach(function(m){
+    var k=(m.casa||'')+'_'+(m.ospite||'');
+    if(!seen[k]){seen[k]=true;res.push({casa:m.casa,ospite:m.ospite,campionato:m.campionato,dataStr:m.dataStr,oraStr:m.oraStr,data:m.data,idPartita:m.idPartita||m.id||k});}
+  });
+  return res;
+}
+function getPartiteFuture(){
+  var all=getAllMatches().filter(isPartitaFutura);
+  var seen={};var res=[];
+  all.forEach(function(m){var k=(m.casa||'')+'_'+(m.ospite||'');if(!seen[k]){seen[k]=true;res.push({casa:m.casa,ospite:m.ospite,campionato:m.campionato,dataStr:m.dataStr,oraStr:m.oraStr,data:m.data,idPartita:m.idPartita||m.id||k});}});
+  return res;
+}
+
+// ═══════════════════════════════════════════════════════
+// LOADING
+// ═══════════════════════════════════════════════════════
+function caricaDati() {
+  var sezioniConLoader = ['s-top5','s-top7','s-raddoppio','s-sistema',
+    's-sistema3f3d','s-dcover','s-over25','s-corner','s-cards',
+    's-mg','s-seriea-top','s-foglio-prono'];
+  sezioniConLoader.forEach(function(sid) {
+    var el = document.getElementById(sid);
+    if(el) el.innerHTML = '<div class="loading" style="padding:3em 1em"><div class="spinner"></div><div class="loading-txt">Caricamento...</div></div>';
+  });
+
+  if(!IS_GAS){
+    palinsestoData = typeof DEMO !== 'undefined' ? JSON.parse(JSON.stringify(DEMO)) : {};
+    buildDatePills(); renderTutto(); caricaAnalistaAI();
+    return;
+  }
+
+  palinsestoData = {
+    raddoppio:[], sistema2su3:null, sistema3f3d:null,
+    top5Oggi:[], topMyCombo5:[], top7Prossimi:[], topSerieA:[],
+    top10_DCOver:[], topOver35:[], top7_Corner:[], top7_Cards:[],
+    top7_MGCasa:[], top7_MGOspite:[], mlInfo:null
+  };
+
+  var done = 0, total = 3;
+  function tick() {
+    done++;
+    if(done >= total) { buildDatePills(); renderTutto(); caricaAnalistaAI(); }
+  }
+
+  google.script.run
+    .withSuccessHandler(function(r) {
+      if(r && r.success && r.data) { Object.assign(palinsestoData, r.data); if(r.timestamp) aggTs(r.timestamp); }
+      tick();
+    })
+    .withFailureHandler(function(e) { console.error('Cache', e); tick(); })
+    .getPalinsestoV3API();
+
+  google.script.run
+    .withSuccessHandler(function(r) { if(r && r.success) Object.assign(palinsestoData, r.data); tick(); })
+    .withFailureHandler(function(e) { console.error('Base', e); tick(); })
+    .caricaDatiBase();
+
+  google.script.run
+    .withSuccessHandler(function(r) { if(r && r.success) Object.assign(palinsestoData, r.data); tick(); })
+    .withFailureHandler(function(e) { console.error('Top7', e); tick(); })
+    .caricaDatiTop7();
+
+  setTimeout(function() {
+    if(done < total) { buildDatePills(); renderTutto(); caricaAnalistaAI(); }
+  }, 20000);
+}
+
+function aggTs(ts){
+  var d = new Date(ts);
+  var s = 'Agg. ' + d.toLocaleDateString('it-IT') + ' ' + d.toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+  var elSbUpdate = document.getElementById('sbUpdate');
+  var elHdrTimestamp = document.getElementById('hdrTimestamp');
+  if (elSbUpdate) elSbUpdate.textContent = s;
+  if (elHdrTimestamp) elHdrTimestamp.textContent = s;
+}
+
+var GIORNI_IT_SHORT = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
+
+function buildDatePills() {
+  var allData = getAllMatches(), dateSet = {};
+  allData.forEach(function(m) {
+    var ds = nds(m.dataStr || m.data);
+    if(ds && ds !== '-') dateSet[ds] = true;
+  });
+  var dates = Object.keys(dateSet);
+  if (dates.length === 0) return;
+  dates.sort(function(a, b) {
+    var pa = a.split('/'), pb = b.split('/');
+    return new Date(2026, parseInt(pa[1])-1, parseInt(pa[0])) -
+           new Date(2026, parseInt(pb[1])-1, parseInt(pb[0]));
+  });
+  var now = new Date();
+  var oggi0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
+  dates = dates.filter(function(ds) {
+    var p = ds.split('/');
+    return new Date(now.getFullYear(), parseInt(p[1])-1, parseInt(p[0])).getTime() >= oggi0;
+  });
+  if (dates.length === 0) return;
+
+  var h = '';
+  dates.forEach(function(ds) {
+    var p = ds.split('/');
+    var d = new Date(now.getFullYear(), parseInt(p[1])-1, parseInt(p[0]));
+    var isToday = (d.getDate() === now.getDate() && d.getMonth() === now.getMonth());
+    var giornoStr = isToday ? 'OGGI' : GIORNI_IT_SHORT[d.getDay()];
+    var dataApi = now.getFullYear() + '-' + pad(parseInt(p[1])) + '-' + pad(parseInt(p[0]));
+    h += '<div class="date-box ' + (isToday ? 'active' : '') + '" data-d="' + ds + '" data-date="' + dataApi + '" onclick="filterDate(this)">' +
+         '<span class="date-day">' + giornoStr + '</span>' +
+         '<span class="date-num">' + p[0] + '</span>' +
+         '</div>';
+  });
+
+  var container = document.getElementById('hdrDatesApp');
+  if (container) container.innerHTML = h;
+}
+
+function getAllAggregatedMatches() {
+  if (!palinsestoData) return [];
+  var seen = {};
+  var now = new Date();
+
+  function processMatch(m) {
+    if (!m || typeof m !== 'object') return;
+    var casa   = m.casa   || m.sqcasa   || '';
+    var ospite = m.ospite || m.sqospite || '';
+    if (!casa || casa === '-') return;
+    var k = casa + '_' + ospite;
+
+    if (!seen[k]) {
+      seen[k] = {
+        info: { casa:casa, ospite:ospite, campionato:m.campionato||'', dataStr:m.dataStr||m.data||'', oraStr:m.oraStr||'', data:m.data||'' },
+        tips: { best:'-', '1x2':'-', ou:'-', corner:'-', cards:'-', tiri:'-', falli:'-' }
+      };
+    }
+
+    var info = seen[k].info;
+    if (!info.campionato && m.campionato) info.campionato = m.campionato;
+    if (!info.dataStr && (m.dataStr || m.data)) info.dataStr = m.dataStr || m.data;
+    if (!info.oraStr  &&  m.oraStr)             info.oraStr  = m.oraStr;
+    if (!info.data    &&  m.data)               info.data    = m.data;
+
+    var t = seen[k].tips;
+    var pr  = (m.pronostico || '').toString().trim();
+    var prU = pr.toUpperCase().replace(/\s+/g, '');
+    var merc = (m.mercato || '').toLowerCase();
+
+    if (m.consiglio1X2    && t['1x2']  === '-') t['1x2']  = m.consiglio1X2;
+    if (m.consiglioOU     && t.ou      === '-') t.ou      = m.consiglioOU;
+    if (m.consiglioCorner && t.corner  === '-') t.corner  = m.consiglioCorner;
+    if (m.consiglioCards  && t.cards   === '-') t.cards   = m.consiglioCards;
+    if (m.consiglioTiri   && t.tiri    === '-') t.tiri    = m.consiglioTiri;
+    if (m.consiglioFalli  && t.falli   === '-') t.falli   = m.consiglioFalli;
+    var bestStr = m.best5combo || m.myCombo5 || '';
+    if (bestStr && t.best === '-') t.best = bestStr;
+
+    if (pr && pr !== '-') {
+      if (merc.includes('corner') || prU.includes('CORNER')) { if (t.corner === '-') t.corner = pr; }
+      else if (merc.includes('card') || prU.includes('CARD')) { if (t.cards === '-') t.cards = pr; }
+      else if (merc.includes('tiri')) { if (t.tiri === '-') t.tiri = pr; }
+      else if (merc.includes('falli')) { if (t.falli === '-') t.falli = pr; }
+      else if (prU === '1X' || prU === 'X2' || prU === '12') { if (t['1x2'] === '-') t['1x2'] = pr; }
+      else if (prU === '1' || prU === 'X' || prU === '2' || merc === '1x2') { if (t['1x2'] === '-') t['1x2'] = pr; }
+      else if (pr.includes('+')) { if (t.best === '-') t.best = pr; }
+      else if (merc.includes('o/u') || merc.includes('over') || merc.includes('under') || merc.includes('mg') || prU.startsWith('OVER') || prU.startsWith('UNDER') || prU === 'GG' || prU === 'NG') { if (t.ou === '-') t.ou = pr; }
+      else { if (t.best === '-') t.best = pr; }
+    }
+  }
+
+  ['top5Oggi','top7Prossimi','topSerieA','top7_Corner','top7_Cards',
+   'top7_MGCasa','top7_MGOspite','top10_DCOver','topOver35','topMyCombo5']
+  .forEach(function(l) { (palinsestoData[l] || []).forEach(processMatch); });
+
+  (palinsestoData.raddoppio || []).forEach(function(card) {
+    (card.pick || card.partite || []).forEach(processMatch);
+  });
+  var s2 = palinsestoData.sistema2su3;
+  if (s2 && s2.terzetti) s2.terzetti.forEach(function(tz) { (tz.pick || []).forEach(processMatch); });
+  var s3 = palinsestoData.sistema3f3d;
+  if (s3) { (s3.fisse || []).forEach(processMatch); (s3.doppie || []).forEach(processMatch); }
+
+  var agg = Object.values(seen);
+  agg.forEach(function(row) {
+    var m = row.info;
+    var rawDate = m.dataStr || m.data;
+    var ds = nds(rawDate);
+    var ora = nora(m.oraStr, rawDate);
+    row.ds = ds; row.ora = ora; row.ts = Infinity;
+    if (ds && ds !== '-') {
+      var pts = ds.split('/');
+      if (pts.length >= 2) {
+        var tp = (ora && ora !== '-') ? ora.split(':') : ['23','59'];
+        var yr = now.getFullYear(), mo = parseInt(pts[1]) - 1;
+        if (mo < now.getMonth() - 3) yr++;
+        var d = new Date(yr, mo, parseInt(pts[0]), parseInt(tp[0])||23, parseInt(tp[1])||59, 0);
+        if (!isNaN(d.getTime())) row.ts = d.getTime();
+      }
+    }
+  });
+  return agg;
+}
+
+// ── TABELLA PRONOSTICI ──
+function renderFoglioPronostici(){
+  var el = document.getElementById('s-foglio-prono');
+  if(!el) return;
+  var agg = getAllAggregatedMatches();
+  var now = new Date();
+  agg.forEach(function(row){
+    var ds = nds(row.info.dataStr || row.info.data);
+    var ora = nora(row.info.oraStr, row.info.dataStr || row.info.data);
+    row.ds = ds; row.ora = ora;
+    if (ds === '-') { row.ts = Infinity; return; }
+    var pts = ds.split('/');
+    var tp = ora !== '-' ? ora.split(':') : [23,59];
+    var yr = now.getFullYear(), mo = parseInt(pts[1])-1;
+    if (mo < now.getMonth() - 3) yr++;
+    row.ts = new Date(yr, mo, parseInt(pts[0]), parseInt(tp[0]), parseInt(tp[1]), 0).getTime();
+  });
+  agg.sort(function(a,b){ return a.ts - b.ts; });
+
+  var h = '<div class="sec-hdr"><div class="sec-title">📊 Tabella Pronostici</div><div class="sec-sub">Tutti i consigli aggregati e ordinati per orario</div></div>';
+  if(!agg.length){ el.innerHTML = h + emp('📊','Nessun pronostico disponibile.'); return; }
+
+  h += '<div class="table-wrapper"><table class="prono-table" style="font-size:0.85em; width:100%;">';
+  h += '<thead><tr><th style="text-align:center">Data/Ora</th><th>Partita</th><th style="text-align:center">Best</th><th style="text-align:center">1X2</th><th style="text-align:center">U/O</th><th style="text-align:center">Corner</th><th style="text-align:center">Cards</th><th style="text-align:center">Tiri</th><th style="text-align:center">Falli</th></tr></thead><tbody>';
+  agg.forEach(function(row){
+    var m = row.info, t = row.tips;
+    h += '<tr>';
+    h += '<td style="color:var(--txt3);text-align:center;white-space:nowrap;line-height:1.4"><span style="font-size:0.9em">' + row.ds + '</span><br><strong style="color:var(--txt);font-size:1.1em">' + row.ora + '</strong></td>';
+    h += '<td style="min-width:120px">' + teamRow(m.casa,"font-size:1em;font-weight:700;") + '<div style="height:4px"></div>' + teamRow(m.ospite,"font-size:1em;font-weight:700;") + '</td>';
+    h += '<td style="text-align:center"><span class="t-prono" style="background:var(--accent);color:#fff;white-space:nowrap">' + (t.best !== '-' ? t.best.substring(0,18) : '-') + '</span></td>';
+    h += '<td style="font-weight:700;text-align:center;white-space:nowrap">' + t['1x2'] + '</td>';
+    h += '<td style="font-weight:700;text-align:center;white-space:nowrap">' + t.ou + '</td>';
+    h += '<td style="font-weight:700;text-align:center;white-space:nowrap">' + t.corner + '</td>';
+    h += '<td style="font-weight:700;text-align:center;white-space:nowrap">' + t.cards + '</td>';
+    h += '<td style="font-weight:700;text-align:center;white-space:nowrap">' + t.tiri + '</td>';
+    h += '<td style="font-weight:700;text-align:center;white-space:nowrap">' + t.falli + '</td>';
+    h += '</tr>';
+  });
+  h += '</tbody></table></div>';
+  el.innerHTML = h;
+}
+
+// ── Top5 oggi ──
+function getTop5OggiData() {
+  var seen = {}, result = [];
+  function aggiungi(arr) {
+    (arr || []).filter(isPartitaOggi).forEach(function(m) {
+      var k = (m.casa || '') + '_' + (m.ospite || '');
+      if (!seen[k] && m.casa && m.casa !== '-') { seen[k] = true; result.push(m); }
+    });
+  }
+  aggiungi(palinsestoData.top5Oggi);
+  if (result.length < 5) aggiungi(palinsestoData.top7Prossimi);
+  if (result.length < 5) aggiungi(palinsestoData.topSerieA);
+  if (result.length < 5) aggiungi(palinsestoData.top10_DCOver);
+  if (result.length < 5) aggiungi(palinsestoData.topOver35);
+  if (result.length < 5) {
+    getAllMatches().filter(isPartitaOggi).forEach(function(m) {
+      var k = (m.casa || '') + '_' + (m.ospite || '');
+      if (!seen[k] && m.casa && m.casa !== '-' && np(m.prob) > 0) { seen[k] = true; result.push(m); }
+    });
+    result.sort(function(a, b) { return np(b.prob) - np(a.prob); });
+  }
+  return result.slice(0, 5);
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER TUTTO
+// ═══════════════════════════════════════════════════════
+function renderTutto(){
+  renderRaddoppio();
+  renderSistema2su3();
+  renderSistema3F3D();
+  renderLista('s-top5', getTop5OggiData(), '⭐ Top 5 — Oggi', 'I 5 migliori pronostici di oggi');
+  renderMyCombo5();
+  renderLista('s-top7', palinsestoData.top7Prossimi, '📅 Top 7 — Prossime 72h', 'I migliori pronostici 3 giorni');
+  renderDCOver();
+  renderOver25();
+  renderTopSerieA();
+  renderMG();
+  renderLista('s-corner', palinsestoData.top7_Corner, '🚩 Top 7 — Corner', '');
+  renderLista('s-cards',  palinsestoData.top7_Cards,  '🟨 Top 7 — Cards',  '');
+  renderFoglioPronostici();
+  updateLeagueFilters();
+}
+
+// ═══════════════════════════════════════════════════════
+// LOGHI & TEAM ROW
+// ═══════════════════════════════════════════════════════
+function ottieniLogo(squadra){
+  var sq=(squadra||'').toLowerCase().trim();
+  var loghi={
+    'juventus':'https://upload.wikimedia.org/wikipedia/commons/b/bc/Juventus_FC_2017_icon_%28black%29.svg',
+    'milan':'https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg',
+    'ac milan':'https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg',
+    'inter':'https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg',
+    'inter milan':'https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg',
+    'napoli':'https://upload.wikimedia.org/wikipedia/commons/2/28/S.S.C._Napoli_logo.svg',
+    'roma':'https://upload.wikimedia.org/wikipedia/it/1/1e/Logo_AS_Roma_2017.svg',
+    'as roma':'https://upload.wikimedia.org/wikipedia/it/1/1e/Logo_AS_Roma_2017.svg',
+    'lazio':'https://upload.wikimedia.org/wikipedia/it/e/e4/S.S._Lazio_logo.svg',
+    'atalanta':'https://upload.wikimedia.org/wikipedia/it/1/10/Atalanta_Bergamasca_Calcio_logo.svg',
+    'fiorentina':'https://upload.wikimedia.org/wikipedia/commons/8/8c/ACF_Fiorentina_-_logo_%28Italy%2C_2022%29.svg',
+    'bologna':'https://upload.wikimedia.org/wikipedia/en/5/5b/Bologna_F.C._1909_logo.svg',
+    'torino':'https://upload.wikimedia.org/wikipedia/it/1/13/Torino_FC_logo.svg',
+    'genoa':'https://upload.wikimedia.org/wikipedia/en/6/6c/Genoa_C.F.C._logo.svg',
+    'udinese':'https://upload.wikimedia.org/wikipedia/en/b/b9/Udinese_Calcio_logo.svg',
+    'sassuolo':'https://upload.wikimedia.org/wikipedia/en/1/1c/US_Sassuolo_Calcio_logo.svg',
+    'cagliari':'https://upload.wikimedia.org/wikipedia/en/f/f6/Cagliari_Calcio_Logo.svg',
+    'lecce':'https://upload.wikimedia.org/wikipedia/en/1/1d/US_Lecce_logo.svg',
+    'empoli':'https://upload.wikimedia.org/wikipedia/en/e/e4/Empoli_FC_logo.svg',
+    'venezia':'https://upload.wikimedia.org/wikipedia/en/7/79/FC_Venezia.svg',
+    'parma':'https://upload.wikimedia.org/wikipedia/en/b/b4/Parma_Calcio_1913_badge.svg',
+    'como':'https://upload.wikimedia.org/wikipedia/en/5/5c/Logo_Como_1907.svg',
+    'verona':'https://upload.wikimedia.org/wikipedia/en/6/67/Hellas_Verona_FC_logo_%282020%29.svg',
+    'hellas verona':'https://upload.wikimedia.org/wikipedia/en/6/67/Hellas_Verona_FC_logo_%282020%29.svg',
+    'monza':'https://upload.wikimedia.org/wikipedia/en/7/74/AC_Monza_logo.svg',
+    'arsenal':'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg',
+    'aston villa':'https://upload.wikimedia.org/wikipedia/en/9/9f/Aston_Villa_logo.svg',
+    'chelsea':'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg',
+    'liverpool':'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg',
+    'manchester city':'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg',
+    'manchester united':'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg',
+    'man city':'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg',
+    'man united':'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg',
+    'man utd':'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg',
+    'newcastle':'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg',
+    'newcastle united':'https://upload.wikimedia.org/wikipedia/en/5/56/Newcastle_United_Logo.svg',
+    'tottenham':'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg',
+    'tottenham hotspur':'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg',
+    'spurs':'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg',
+    'west ham':'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg',
+    'west ham united':'https://upload.wikimedia.org/wikipedia/en/c/c2/West_Ham_United_FC_logo.svg',
+    'brighton':'https://upload.wikimedia.org/wikipedia/en/f/fd/Brighton_%26_Hove_Albion_logo.svg',
+    'nottingham forest':'https://upload.wikimedia.org/wikipedia/en/e/e5/Nottingham_Forest_F.C._logo.svg',
+    'brentford':'https://upload.wikimedia.org/wikipedia/en/2/2a/Brentford_FC_crest.svg',
+    'fulham':'https://upload.wikimedia.org/wikipedia/en/e/eb/Fulham_FC_%28shield%29.svg',
+    'everton':'https://upload.wikimedia.org/wikipedia/en/7/7c/Everton_FC_logo.svg',
+    'wolves':'https://upload.wikimedia.org/wikipedia/en/f/fc/Wolverhampton_Wanderers.svg',
+    'wolverhampton':'https://upload.wikimedia.org/wikipedia/en/f/fc/Wolverhampton_Wanderers.svg',
+    'crystal palace':'https://upload.wikimedia.org/wikipedia/en/a/a2/Crystal_Palace_FC_logo_%282022%29.svg',
+    'leicester':'https://upload.wikimedia.org/wikipedia/en/2/2d/Leicester_City_crest.svg',
+    'leicester city':'https://upload.wikimedia.org/wikipedia/en/2/2d/Leicester_City_crest.svg',
+    'southampton':'https://upload.wikimedia.org/wikipedia/en/c/c9/FC_Southampton.svg',
+    'ipswich':'https://upload.wikimedia.org/wikipedia/en/4/43/Ipswich_Town.svg',
+    'ipswich town':'https://upload.wikimedia.org/wikipedia/en/4/43/Ipswich_Town.svg',
+    'real madrid':'https://upload.wikimedia.org/wikipedia/sco/5/56/Real_Madrid_CF.svg',
+    'barcelona':'https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg',
+    'barcellona':'https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg',
+    'atletico madrid':'https://upload.wikimedia.org/wikipedia/en/f/f4/Atletico_Madrid_2017_logo.svg',
+    'sevilla':'https://upload.wikimedia.org/wikipedia/en/3/3b/Sevilla_FC_logo.svg',
+    'siviglia':'https://upload.wikimedia.org/wikipedia/en/3/3b/Sevilla_FC_logo.svg',
+    'valencia':'https://upload.wikimedia.org/wikipedia/en/c/ce/Valenciacf.svg',
+    'real sociedad':'https://upload.wikimedia.org/wikipedia/en/f/f1/Real_Sociedad_logo.svg',
+    'athletic bilbao':'https://upload.wikimedia.org/wikipedia/en/9/98/Club_Athletic_Bilbao_logo.svg',
+    'athletic club':'https://upload.wikimedia.org/wikipedia/en/9/98/Club_Athletic_Bilbao_logo.svg',
+    'villarreal':'https://upload.wikimedia.org/wikipedia/en/7/70/Villarreal_CF_logo.svg',
+    'real betis':'https://upload.wikimedia.org/wikipedia/en/1/13/Real_betis_logo.svg',
+    'betis':'https://upload.wikimedia.org/wikipedia/en/1/13/Real_betis_logo.svg',
+    'celta vigo':'https://upload.wikimedia.org/wikipedia/en/1/12/RC_Celta_de_Vigo_logo.svg',
+    'celta':'https://upload.wikimedia.org/wikipedia/en/1/12/RC_Celta_de_Vigo_logo.svg',
+    'osasuna':'https://upload.wikimedia.org/wikipedia/en/3/3e/Escudo_osasuna.svg',
+    'girona':'https://upload.wikimedia.org/wikipedia/en/6/66/Girona_FC.svg',
+    'getafe':'https://upload.wikimedia.org/wikipedia/en/4/49/Getafe_CF.svg',
+    'espanyol':'https://upload.wikimedia.org/wikipedia/en/7/7b/RCDEspanyol.svg',
+    'rcd espanyol':'https://upload.wikimedia.org/wikipedia/en/7/7b/RCDEspanyol.svg',
+    'rayo vallecano':'https://upload.wikimedia.org/wikipedia/en/d/d8/Rayo_Vallecano_logo.svg',
+    'mallorca':'https://upload.wikimedia.org/wikipedia/en/b/b9/RCD_Mallorca_logo.svg',
+    'rcd mallorca':'https://upload.wikimedia.org/wikipedia/en/b/b9/RCD_Mallorca_logo.svg',
+    'bayern munich':'https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg',
+    'bayern':'https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg',
+    'fc bayern':'https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg',
+    'borussia dortmund':'https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg',
+    'bvb':'https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg',
+    'dortmund':'https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg',
+    'bayer leverkusen':'https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg',
+    'leverkusen':'https://upload.wikimedia.org/wikipedia/en/5/59/Bayer_04_Leverkusen_logo.svg',
+    'rb leipzig':'https://upload.wikimedia.org/wikipedia/en/0/04/RB_Leipzig_2014_logo.svg',
+    'leipzig':'https://upload.wikimedia.org/wikipedia/en/0/04/RB_Leipzig_2014_logo.svg',
+    'eintracht frankfurt':'https://upload.wikimedia.org/wikipedia/commons/0/04/Eintracht_Frankfurt_Logo.svg',
+    'frankfurt':'https://upload.wikimedia.org/wikipedia/commons/0/04/Eintracht_Frankfurt_Logo.svg',
+    'borussia monchengladbach':'https://upload.wikimedia.org/wikipedia/commons/8/81/Borussia_M%C3%B6nchengladbach_logo.svg',
+    'gladbach':'https://upload.wikimedia.org/wikipedia/commons/8/81/Borussia_M%C3%B6nchengladbach_logo.svg',
+    'wolfsburg':'https://upload.wikimedia.org/wikipedia/commons/f/f3/Logo-VfL-Wolfsburg.svg',
+    'vfl wolfsburg':'https://upload.wikimedia.org/wikipedia/commons/f/f3/Logo-VfL-Wolfsburg.svg',
+    'sc freiburg':'https://upload.wikimedia.org/wikipedia/en/d/df/SC_Freiburg_logo.svg',
+    'freiburg':'https://upload.wikimedia.org/wikipedia/en/d/df/SC_Freiburg_logo.svg',
+    'hoffenheim':'https://upload.wikimedia.org/wikipedia/commons/6/64/TSG_1899_Hoffenheim_logo.svg',
+    'tsg hoffenheim':'https://upload.wikimedia.org/wikipedia/commons/6/64/TSG_1899_Hoffenheim_logo.svg',
+    'mainz':'https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg',
+    '1. fsv mainz':'https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_Mainz_05.svg',
+    'augsburg':'https://upload.wikimedia.org/wikipedia/en/3/35/FC_Augsburg_logo.svg',
+    'fc augsburg':'https://upload.wikimedia.org/wikipedia/en/3/35/FC_Augsburg_logo.svg',
+    'union berlin':'https://upload.wikimedia.org/wikipedia/commons/4/44/1._FC_Union_Berlin_Logo.svg',
+    '1. fc union berlin':'https://upload.wikimedia.org/wikipedia/commons/4/44/1._FC_Union_Berlin_Logo.svg',
+    'werder bremen':'https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg',
+    'bremen':'https://upload.wikimedia.org/wikipedia/commons/b/be/SV-Werder-Bremen-Logo.svg',
+    'psg':'https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg',
+    'paris saint-germain':'https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg',
+    'paris sg':'https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg',
+    'marseille':'https://upload.wikimedia.org/wikipedia/commons/d/d8/Olympique_Marseille_logo.svg',
+    'marsiglia':'https://upload.wikimedia.org/wikipedia/commons/d/d8/Olympique_Marseille_logo.svg',
+    'lyon':'https://upload.wikimedia.org/wikipedia/en/c/c6/Olympique_Lyonnais.svg',
+    'lione':'https://upload.wikimedia.org/wikipedia/en/c/c6/Olympique_Lyonnais.svg',
+    'monaco':'https://upload.wikimedia.org/wikipedia/en/b/ba/AS_Monaco_FC.svg',
+    'as monaco':'https://upload.wikimedia.org/wikipedia/en/b/ba/AS_Monaco_FC.svg',
+    'lille':'https://upload.wikimedia.org/wikipedia/en/6/6f/Lille_OSC_2018_logo.png',
+    'losc':'https://upload.wikimedia.org/wikipedia/en/6/6f/Lille_OSC_2018_logo.png',
+    'nice':'https://upload.wikimedia.org/wikipedia/en/4/4f/OGC_Nice_logo.svg',
+    'ogc nice':'https://upload.wikimedia.org/wikipedia/en/4/4f/OGC_Nice_logo.svg',
+    'lens':'https://upload.wikimedia.org/wikipedia/en/e/e3/RC_Lens_logo.svg',
+    'rc lens':'https://upload.wikimedia.org/wikipedia/en/e/e3/RC_Lens_logo.svg',
+    'rennes':'https://upload.wikimedia.org/wikipedia/en/2/2e/Stade_Rennais_FC.svg',
+    'nantes':'https://upload.wikimedia.org/wikipedia/en/b/b1/FC_Nantes_logo.svg',
+    'ajax':'https://upload.wikimedia.org/wikipedia/en/7/79/Ajax_Amsterdam_logo.svg',
+    'psv':'https://upload.wikimedia.org/wikipedia/en/0/05/PSV_Eindhoven.svg',
+    'psv eindhoven':'https://upload.wikimedia.org/wikipedia/en/0/05/PSV_Eindhoven.svg',
+    'feyenoord':'https://upload.wikimedia.org/wikipedia/en/4/4b/Feyenoord_logo.svg',
+    'az alkmaar':'https://upload.wikimedia.org/wikipedia/en/d/da/AZ_Alkmaar_logo.svg',
+    'az':'https://upload.wikimedia.org/wikipedia/en/d/da/AZ_Alkmaar_logo.svg',
+    'porto':'https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg',
+    'fc porto':'https://upload.wikimedia.org/wikipedia/en/f/f1/FC_Porto.svg',
+    'benfica':'https://upload.wikimedia.org/wikipedia/en/a/a2/SL_Benfica_logo.svg',
+    'sl benfica':'https://upload.wikimedia.org/wikipedia/en/a/a2/SL_Benfica_logo.svg',
+    'sporting cp':'https://upload.wikimedia.org/wikipedia/en/e/e2/Sporting_CP_logo.svg',
+    'sporting':'https://upload.wikimedia.org/wikipedia/en/e/e2/Sporting_CP_logo.svg',
+    'club brugge':'https://upload.wikimedia.org/wikipedia/en/9/97/Club_Brugge_KV_logo.svg',
+    'brugge':'https://upload.wikimedia.org/wikipedia/en/9/97/Club_Brugge_KV_logo.svg',
+    'anderlecht':'https://upload.wikimedia.org/wikipedia/en/c/c9/RSC_Anderlecht_logo.svg',
+    'galatasaray':'https://upload.wikimedia.org/wikipedia/en/a/a7/Galatasaray_S.K._logo.svg',
+    'fenerbahce':'https://upload.wikimedia.org/wikipedia/en/c/c7/Fenerbahce.svg',
+    'fenerbahçe':'https://upload.wikimedia.org/wikipedia/en/c/c7/Fenerbahce.svg',
+    'besiktas':'https://upload.wikimedia.org/wikipedia/en/2/23/Be%C5%9Fikta%C5%9F_JK_logo.svg',
+    'beşiktaş':'https://upload.wikimedia.org/wikipedia/en/2/23/Be%C5%9Fikta%C5%9F_JK_logo.svg',
+    'red bull salzburg':'https://upload.wikimedia.org/wikipedia/en/4/43/FC_Red_Bull_Salzburg_logo.svg',
+    'salzburg':'https://upload.wikimedia.org/wikipedia/en/4/43/FC_Red_Bull_Salzburg_logo.svg',
+    'young boys':'https://upload.wikimedia.org/wikipedia/en/b/b9/BSC_Young_Boys_logo.svg',
+    'bsc young boys':'https://upload.wikimedia.org/wikipedia/en/b/b9/BSC_Young_Boys_logo.svg',
+    'fc basel':'https://upload.wikimedia.org/wikipedia/en/9/9b/FC_Basel_logo.svg',
+    'basel':'https://upload.wikimedia.org/wikipedia/en/9/9b/FC_Basel_logo.svg',
+    'celtic':'https://upload.wikimedia.org/wikipedia/en/3/35/Celtic_FC_crest.svg',
+    'rangers':'https://upload.wikimedia.org/wikipedia/en/3/32/Rangers_FC_logo.svg',
+    'shakhtar donetsk':'https://upload.wikimedia.org/wikipedia/en/a/ab/FC_Shakhtar_Donetsk.svg',
+    'shakhtar':'https://upload.wikimedia.org/wikipedia/en/a/ab/FC_Shakhtar_Donetsk.svg',
+    'red star belgrade':'https://upload.wikimedia.org/wikipedia/en/1/10/Red_Star_Belgrade_FC_crest.svg',
+    'crvena zvezda':'https://upload.wikimedia.org/wikipedia/en/1/10/Red_Star_Belgrade_FC_crest.svg',
+    'slavia prague':'https://upload.wikimedia.org/wikipedia/en/2/2e/Slavia_Prague_logo.svg',
+    'sparta prague':'https://upload.wikimedia.org/wikipedia/en/2/2f/AC_Sparta_Prague_logo.svg',
+    'dinamo zagreb':'https://upload.wikimedia.org/wikipedia/en/5/56/GNK_Dinamo_Zagreb_Logo.svg',
+    'al-hilal':'https://upload.wikimedia.org/wikipedia/en/a/a9/Al-Hilal_FC_logo.svg',
+    'al hilal':'https://upload.wikimedia.org/wikipedia/en/a/a9/Al-Hilal_FC_logo.svg',
+    'al-nassr':'https://upload.wikimedia.org/wikipedia/en/c/c9/Al-Nassr_FC.svg',
+    'al nassr':'https://upload.wikimedia.org/wikipedia/en/c/c9/Al-Nassr_FC.svg',
+    'olympiakos':'https://upload.wikimedia.org/wikipedia/en/0/0e/Olympiacos_FC_logo.svg',
+    'paok':'https://upload.wikimedia.org/wikipedia/en/7/74/PAOK_FC_logo.svg'
+  };
+  return loghi[sq] || ('https://ui-avatars.com/api/?name=' + encodeURIComponent(squadra||'X') + '&background=random&color=fff&size=64&rounded=true&font-size=0.4');
+}
+
+function teamRow(nome, style){
+  var s = style || 'font-size:1.308em;font-weight:700;color:var(--txt)';
+  var fallbackUrl = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(nome) + '&background=random&color=fff&size=64&rounded=true&font-size=0.4';
+  return '<div style="display:flex;align-items:center;gap:8px;' + s + '">' +
+    '<img src="' + ottieniLogo(nome) + '" style="width:20px;height:20px;object-fit:contain;border-radius:50%;border:1px solid #f0f2f5;flex-shrink:0" alt="" onerror="this.src=\'' + fallbackUrl + '\'">' +
+    nome + '</div>';
+}
+
+function matchCard(m, idx) {
+  var q = qDisplay(m);
+  var ora = nora(m.oraStr, m.dataStr || m.data);
+  var p = np(m.prob);
+  var pickLabel = "1X2";
+  var pickValue = m.pronostico || "-";
+  if (pickValue.indexOf("X") !== -1) pickLabel = "Doppia chance";
+  if (pickValue.indexOf("Under") !== -1 || pickValue.indexOf("Over") !== -1) pickLabel = "Gol";
+  if (pickValue.toLowerCase() === "gg" || pickValue.toLowerCase() === "ng") pickLabel = "Entrambe segnano";
+  var timeDisplay = (!ora || ora === "-") ? "FT" : ora;
+  var fallbackCasa   = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(m.casa   || 'X');
+  var fallbackOspite = 'https://ui-avatars.com/api/?name=' + encodeURIComponent(m.ospite || 'X');
+  return '<div class="bm-match" style="animation-delay:' + ((idx||0)*0.04) + 's">' +
+    '<div class="bm-left"><div class="bm-star">☆</div><div class="bm-time">' + timeDisplay + '</div></div>' +
+    '<div class="bm-center">' +
+      '<div class="bm-team"><img src="' + ottieniLogo(m.casa)   + '" alt="" onerror="this.src=\'' + fallbackCasa   + '\'"> <span>' + (m.casa   || '') + '</span><span class="bm-score">-</span></div>' +
+      '<div class="bm-team"><img src="' + ottieniLogo(m.ospite) + '" alt="" onerror="this.src=\'' + fallbackOspite + '\'"> <span>' + (m.ospite || '') + '</span><span class="bm-score">-</span></div>' +
+    '</div>' +
+    '<div class="bm-right">' +
+      '<div class="bm-prob">' + (p > 0 ? p + '%' : '-') + '</div>' +
+      '<div class="bm-pick"><span class="bm-pick-lbl">' + pickLabel + '</span><span class="bm-pick-val">' + pickValue + '</span></div>' +
+      '<div class="bm-quota">' + q.val + '</div>' +
+    '</div>' +
+  '</div>';
+}
+
+function renderLista(sid, rawData, title, sub) {
+  var el = document.getElementById(sid); if(!el) return;
+  var data = filterMatches(rawData);
+  if(!data.length) { el.innerHTML = emp('📊','Nessun pronostico'); return; }
+  var h = '';
+  groupByLeague(data).forEach(function(g) {
+    h += '<div class="league-hdr-app"><span class="bm-star">☆</span> <span>' + g.flag + '</span> <span>' + g.name + '</span></div>';
+    h += g.matches.map(function(m, i) { return matchCard(m, i); }).join('');
+  });
+  el.innerHTML = h;
+}
+
+// ══════════════════════════════════════════
+// RADDOPPIO
+// ══════════════════════════════════════════
+function renderRaddoppio(){
+  var el=document.getElementById('s-raddoppio');
+  var data=palinsestoData.raddoppio||[];
+  var logoBanner='<div style="background:#0d0d1a;border-radius:1.273em;padding:1.636em;margin-bottom:1.091em;display:flex;align-items:center;justify-content:center"><img src="https://drive.google.com/thumbnail?id=1npk45OU4klUTb6aqEV4L2l-0vP6ylgBi&sz=w400" style="height:4.182em;width:auto;max-width:20em;object-fit:contain" onerror="this.style.display=\'none\'"></div>';
+  if(!data.length){el.innerHTML=logoBanner+emp('🛡️','Nessun raddoppio disponibile');return;}
+  var h=logoBanner+'<div class="sec-hdr"><div class="sec-title">🛡️ Raddoppio Sicuro</div><div class="sec-sub">Gioca ogni schedina separatamente</div></div>';
+  data.forEach(function(c,i){
+    var tipo=(c.tipo||'RADDOPPIO').toUpperCase();
+    var qt=c.quotaTotale>0?c.quotaTotale.toFixed(2):'—';
+    var pc=np(c.probCombinata);
+    var picks=c.pick||c.partite||[];
+    h+='<div class="radd-card" style="animation-delay:'+i*0.06+'s"><div class="radd-head"><div style="display:flex;align-items:center;gap:0.818em"><span class="radd-badge '+(tipo==='TERZINA'?'tripla':'')+'">'+tipo+'</span><span class="radd-label">#'+(i+1)+' · '+picks.length+' partite</span></div><div style="text-align:right"><span class="radd-qtot">'+qt+'</span><span class="radd-qtot-label">Quota tot.</span></div></div>';
+    picks.forEach(function(p){
+      var q=qDisplay(p);var ds=nds(p.dataStr||p.data),ora=nora(p.oraStr,p.dataStr||p.data);
+      h+='<div class="radd-match"><div style="flex:1;min-width:0"><div class="radd-teams">'+teamRow(p.casa)+'<span style="color:var(--txt3);font-size:.9em;padding:0 3px">vs</span>'+teamRow(p.ospite)+'</div><div class="radd-meta">'+getFlag(p)+' '+(p.campionato||'')+' · '+ds+' '+ora+'</div></div><div style="text-align:right"><div class="radd-prono">'+p.pronostico+'</div><div style="display:flex;align-items:center;gap:0.364em;margin-top:3px"><span class="radd-qreal" style="'+(q.isReal?'':'background:#64748b')+'">'+q.val+'</span><span style="font-size:1em;color:var(--txt3)">'+np(p.prob)+'%</span></div></div></div>';
+    });
+    h+='<div class="radd-foot"><div class="radd-foot-txt">Prob. combinata</div><div style="display:flex;align-items:center;gap:0.727em"><div class="radd-pt-bar"><div class="radd-pt-fill" style="width:'+Math.min(100,pc*2)+'%"></div></div><span class="radd-pt-num">'+pc+'%</span></div></div></div>';
+  });
+  el.innerHTML=h;
+}
+
+// ══════════════════════════════════════════
+// SISTEMA 2/3
+// ══════════════════════════════════════════
+function renderSistema2su3(){
+  var el=document.getElementById('s-sistema');
+  var sistema=palinsestoData.sistema2su3;
+  var h='<div class="sec-hdr"><div class="sec-title">🎯 Sistema 2/3</div><div class="sec-sub">Basta indovinarne 2 su 3</div></div>';
+  h+='<div style="background:#fef3c7;border-radius:0.909em;padding:0.909em 1.273em;margin-bottom:0.909em;font-size:0.923em;color:#78350f;line-height:1.6">💡 Basta azzeccarne <b>2 su 3</b> per vincere. Più sicuro della schedina classica.</div>';
+  if(!sistema||!sistema.terzetti||!sistema.terzetti.length){el.innerHTML=h+emp('🎯','Nessun terzetto disponibile');return;}
+  sistema.terzetti.forEach(function(t,idx){
+    h+='<div class="sist-card" style="animation-delay:'+idx*0.08+'s"><div class="sist-head"><span class="sist-badge">Terzetto #'+(idx+1)+'</span><span class="sist-prob">P(2/3) = '+t.prob2su3+'%</span></div>';
+    (t.pick||[]).forEach(function(p,i){
+      var ds=nds(p.dataStr||p.data),ora=nora(p.oraStr,p.dataStr||p.data);var q=qDisplay(p);
+      h+='<div class="sist-match"><div class="sist-letter">'+String.fromCharCode(65+i)+'</div><div class="sist-info"><div class="sist-teams">'+teamRow(p.casa)+'<span style="color:var(--txt3);font-size:.9em;padding:0 3px">vs</span>'+teamRow(p.ospite)+'</div><div class="sist-meta">'+getFlag(p)+' '+(p.campionato||'')+' · '+ds+' '+ora+'</div></div><div><div class="sist-prono">'+p.pronostico+'</div><div class="sist-prob-small">'+np(p.prob)+'% · q.'+q.val+'</div></div></div>';
+    });
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+
+// ══════════════════════════════════════════
+// SISTEMA 3F+3D
+// ══════════════════════════════════════════
+function _isPronosticoFissa(m){
+  var merc=(m.mercato||'').toLowerCase().replace(/\s+/g,' ').trim();
+  var pr=(m.pronostico||'').toLowerCase().trim();
+  var prUP=(m.pronostico||'').toUpperCase().trim();
+  if(prUP==='1X'||prUP==='X2'||prUP==='12')return false;
+  var mercatiOK=['1x2','o/u','over/under','gg/ng','mg match','mg casa','mg ospite','multigol'];
+  if(mercatiOK.some(function(x){return merc===x||merc.startsWith(x);}))return true;
+  if(pr.startsWith('over ')||pr.startsWith('under '))return true;
+  if(pr==='gg'||pr==='ng'||pr==='gol'||pr==='nogol'||pr==='no gol')return true;
+  if((pr==='1'||pr==='x'||pr==='2')&&merc==='1x2')return true;
+  if(merc.includes('mg')||merc.includes('multigol'))return true;
+  if(/^\d[-+]\d?$/.test(pr)||/^\d\+$/.test(pr))return true;
+  return false;
+}
+function _isPronosticoDoppia(m){
+  var pr=(m.pronostico||'').toUpperCase().replace(/\s+/g,'').trim();
+  return pr==='1X'||pr==='X2'||pr==='12';
+}
+
+function _costruisciSistema(nFisse, nDoppie) {
+  var now   = new Date();
+  var oggi0  = new Date(now.getFullYear(), now.getMonth(), now.getDate(),  0,  0,  0).getTime();
+  var oggi23 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59).getTime();
+
+  function tsOf(m) {
+    var ds  = nds(m.dataStr || m.data);
+    var ora = nora(m.oraStr, m.dataStr || m.data);
+    if (!ds || ds === '-') return Infinity;
+    var pts = ds.split('/'); if (pts.length < 2) return Infinity;
+    var tp  = (ora && ora !== '-') ? ora.split(':') : ['23','59'];
+    var yr  = now.getFullYear();
+    var mo  = parseInt(pts[1]) - 1;
+    if (mo < now.getMonth() - 3) yr++;
+    var d = new Date(yr, mo, parseInt(pts[0]), parseInt(tp[0])||0, parseInt(tp[1])||0, 0);
+    return isNaN(d.getTime()) ? Infinity : d.getTime();
+  }
+
+  var allEntries = [];
+  var listeSemplici = ['top5Oggi','top7Prossimi','topSerieA',
+    'top7_Corner','top7_Cards','top7_MGCasa','top7_MGOspite',
+    'top10_DCOver','topOver35','topMyCombo5'];
+
+  listeSemplici.forEach(function(l) {
+    (palinsestoData[l] || []).forEach(function(m) { allEntries.push(m); });
+  });
+  (palinsestoData.raddoppio || []).forEach(function(card) {
+    (card.pick || card.partite || []).forEach(function(m) { allEntries.push(m); });
+  });
+
+  var oggi = allEntries.filter(function(m) {
+    var ts = tsOf(m);
+    return ts >= oggi0 && ts <= oggi23;
+  });
+
+  var seenFisse  = {};
+  var seenDoppie = {};
+
+  oggi.forEach(function(m) {
+    if (!m.casa || m.casa === '-' || !m.pronostico || m.pronostico === '-') return;
+    var pr   = m.pronostico.toString().trim();
+    var prU  = pr.toUpperCase().replace(/\s+/g, '');
+    var merc = (m.mercato || '').toLowerCase();
+    var prob = np(m.prob);
+    var k    = m.casa + '_' + m.ospite;
+
+    var doppiaStr = '';
+    if      (prU === '1X' || prU === 'X2' || prU === '12') doppiaStr = prU;
+    else if (merc.includes('dc') || merc.includes('doppia')) {
+      if      (prU.includes('1X')) doppiaStr = '1X';
+      else if (prU.includes('X2')) doppiaStr = 'X2';
+      else if (prU.includes('12')) doppiaStr = '12';
+    }
+    else if (pr.includes('+')) {
+      if      (prU.startsWith('1X')) doppiaStr = '1X';
+      else if (prU.startsWith('X2')) doppiaStr = 'X2';
+      else if (prU.startsWith('12')) doppiaStr = '12';
+    }
+
+    if (doppiaStr) {
+      if (!seenDoppie[k] || prob > np((seenDoppie[k] || {}).prob || 0)) {
+        seenDoppie[k] = Object.assign({}, m, { pronostico: doppiaStr, prob: Math.max(prob, 65) });
+      }
+      return;
+    }
+
+    if (pr.includes('+')) return;
+
+    var isFissa = false;
+    if      (prU === '1' || prU === 'X' || prU === '2')                            isFissa = true;
+    else if (merc === '1x2')                                                         isFissa = true;
+    else if (merc.includes('o/u') || merc.includes('over') || merc.includes('under')) isFissa = true;
+    else if (prU.startsWith('OVER') || prU.startsWith('UNDER'))                     isFissa = true;
+    else if (prU === 'GG' || prU === 'NG')                                           isFissa = true;
+    else if (merc.includes('mg') || merc.includes('multigol'))                       isFissa = true;
+    else if (/^\d[-–]\d/.test(pr) || /^\d\+$/.test(pr))                             isFissa = true;
+
+    if (isFissa && prob > 0) {
+      if (!seenFisse[k] || prob > np((seenFisse[k] || {}).prob || 0)) seenFisse[k] = m;
+    }
+  });
+
+  var candFisse  = Object.values(seenFisse) .sort(function(a,b){ return np(b.prob)-np(a.prob); });
+  var candDoppie = Object.values(seenDoppie).sort(function(a,b){ return np(b.prob)-np(a.prob); });
+
+  var fisse = [], doppie = [], usate = new Set();
+  for (var i = 0; i < candFisse.length  && fisse.length  < nFisse;  i++) { var kf = candFisse[i].casa  + '_' + candFisse[i].ospite;  if (!usate.has(kf)) { fisse.push(candFisse[i]);   usate.add(kf); } }
+  for (var j = 0; j < candDoppie.length && doppie.length < nDoppie; j++) { var kd = candDoppie[j].casa + '_' + candDoppie[j].ospite; if (!usate.has(kd)) { doppie.push(candDoppie[j]); usate.add(kd); } }
+
+  return { fisse: fisse, doppie: doppie, totPartiteOggi: oggi.length };
+}
+
+function _htmlSistemaCard(fisse, doppie, tipoLabel, totPartite){
+  if(fisse.length<1 && doppie.length<1) return null;
+  var tipo=fisse.length+'F'+doppie.length+'D';
+  var bollette=Math.pow(2,doppie.length);
+  var probFisse = fisse.length > 0 ? fisse.reduce(function(a,p){return a*(np(p.prob)/100);},1) : 1;
+  var probFissePerc = fisse.length > 0 ? Math.round(probFisse*1000)/10 : 0;
+  var prob1D = doppie.length > 0 ? 1-doppie.reduce(function(a,p){return a*(1-np(p.prob)/100);},1) : 1;
+  var prob1DPerc = doppie.length > 0 ? Math.round(prob1D*1000)/10 : 0;
+  var probSist = Math.round(probFisse*(doppie.length>0?prob1D:1)*1000)/10;
+  var now=new Date();
+  var dataOggi=pad(now.getDate())+'/'+pad(now.getMonth()+1)+'/'+now.getFullYear();
+  var h='<div class="s3f3d-card">';
+  h+='<div class="s3f3d-head"><div><div class="s3f3d-tipo">'+tipoLabel+' '+tipo+' — '+dataOggi+'</div>';
+  h+='<div style="font-size:1em;color:rgba(255,255,255,.5);margin-top:3px">'+(totPartite||0)+' partite oggi disponibili · '+bollette+' bollette</div></div>';
+  h+='<div style="text-align:right"><span class="s3f3d-prob">'+probSist+'%</span><span class="s3f3d-prob-lbl">P(sistema)</span></div></div>';
+  h+='<div class="s3f3d-stats">';
+  if(fisse.length > 0) h+='<div class="s3f3d-stat"><div class="s3f3d-stat-val">'+probFissePerc+'%</div><div class="s3f3d-stat-lbl">P(fisse)</div></div>';
+  h+='<div class="s3f3d-stat"><div class="s3f3d-stat-val">'+prob1DPerc+'%</div><div class="s3f3d-stat-lbl">P(≥1 doppia)</div></div>';
+  h+='<div class="s3f3d-stat"><div class="s3f3d-stat-val">'+bollette+'</div><div class="s3f3d-stat-lbl">Bollette</div></div>';
+  h+='</div>';
+  if(fisse.length){
+    h+='<div class="s3f3d-section">📌 '+fisse.length+(fisse.length===1?' Fissa':' Fisse')+'</div>';
+    fisse.forEach(function(p,i){
+      var ds=nds(p.dataStr||p.data),ora=nora(p.oraStr,p.dataStr||p.data);
+      h+='<div class="s3f3d-match"><div style="flex:1;min-width:0"><div class="s3f3d-teams">'+teamRow(p.casa)+'<span style="color:var(--txt3);font-size:.9em;padding:0 3px">vs</span>'+teamRow(p.ospite)+'</div>';
+      h+='<div class="s3f3d-meta">'+getFlag(p)+' '+(p.campionato||'')+' · '+ds+' '+ora+'</div></div>';
+      h+='<div style="text-align:right"><div class="s3f3d-prono">'+p.pronostico+'</div><div class="s3f3d-tag">FISSA '+(i+1)+' · '+np(p.prob)+'%</div></div></div>';
+    });
+  }
+  if(doppie.length){
+    h+='<div class="s3f3d-section doppie">🔄 '+doppie.length+(doppie.length===1?' Doppia':' Doppie')+' (DC 1X/X2/12)</div>';
+    doppie.forEach(function(p,i){
+      var ds=nds(p.dataStr||p.data),ora=nora(p.oraStr,p.dataStr||p.data);
+      h+='<div class="s3f3d-match"><div style="flex:1;min-width:0"><div class="s3f3d-teams">'+teamRow(p.casa)+'<span style="color:var(--txt3);font-size:.9em;padding:0 3px">vs</span>'+teamRow(p.ospite)+'</div>';
+      h+='<div class="s3f3d-meta">'+getFlag(p)+' '+(p.campionato||'')+' · '+ds+' '+ora+'</div></div>';
+      h+='<div style="text-align:right"><div class="s3f3d-prono">'+p.pronostico+'</div><div class="s3f3d-tag" style="background:#dbeafe;color:#1e3a8a">DOPPIA '+(i+1)+' · '+np(p.prob)+'%</div></div></div>';
+    });
+  }
+  h+='<div style="padding:1em 1.455em;background:#eff6ff;font-size:0.923em;color:#1e3a8a;line-height:1.5">💡 Sviluppo in multipla integrale. '+(fisse.length===0?'Basta che entrino le doppie.':'Devono entrare tutte le fisse obbligatorie.')+'</div>';
+  h+='</div>';
+  return h;
+}
+
+function renderSistema3F3D(){
+  var el=document.getElementById('s-sistema3f3d');
+  var h='<div class="sec-hdr"><div class="sec-title">🔵 Sistema del Giorno</div>';
+  h+='<div class="sec-sub">3 Fisse + 3 Doppie · Solo oggi · Mercati: 1X2 O/U GG/NG MG</div></div>';
+  h+='<div style="background:#eff6ff;border-radius:0.909em;padding:0.909em 1.273em;margin-bottom:0.909em;font-size:0.923em;color:#1e3a8a;line-height:1.6">';
+  h+='ℹ️ <b>Fisse</b>: pronostici 1X2, Over/Under, GG/NG, Multigol di oggi. <b>Doppie</b>: Doppia Chance (1X · X2 · 12) di oggi.</div>';
+  var ris=_costruisciSistema(3,3);
+  var card=_htmlSistemaCard(ris.fisse,ris.doppie,'Sistema del Giorno',ris.totPartiteOggi);
+  if(!card){ h+=emp('🔵','Non abbastanza partite oggi per generare il sistema 3+3.'); el.innerHTML=h; return; }
+  el.innerHTML=h+card;
+}
+
+// ══════════════════════════════════════════
+// SISTEMA PERSONALIZZATO
+// ══════════════════════════════════════════
+var _spFisse=3, _spDoppie=3;
+function renderSistemaCustom(){
+  var el=document.getElementById('s-sistema-custom');if(!el)return;
+  var oggi=getPartiteOggi();
+  var n=oggi.length;
+  var infoTxt=n>0?'Ci sono <b>'+n+' partite oggi</b> disponibili.':'Nessuna partita trovata per oggi.';
+  el.innerHTML=
+    '<div class="sec-hdr"><div class="sec-title">🔢 Sistema Personalizzato</div><div class="sec-sub">Solo partite di oggi · Scegli fisse e doppie</div></div>'+
+    '<div class="sp-info-box">'+infoTxt+'</div>'+
+    '<div class="sp-config-card">'+
+      '<div class="sp-config-title">⚙️ Configurazione Sistema</div>'+
+      '<div class="sp-stepper-row"><span class="sp-stepper-label">Numero Fisse</span><div class="sp-stepper-group"><button onclick="spStep(\'f\',-1)">−</button><span id="spFisse">'+_spFisse+'</span><button onclick="spStep(\'f\',1)">+</button></div></div>'+
+      '<div class="sp-stepper-row"><span class="sp-stepper-label">Numero Doppie (DC)</span><div class="sp-stepper-group"><button onclick="spStep(\'d\',-1)">−</button><span id="spDoppie">'+_spDoppie+'</span><button onclick="spStep(\'d\',1)">+</button></div></div>'+
+      '<div id="spPreview" style="background:#dbeafe;border-radius:0.818em;padding:0.727em 1em;font-size:0.923em;color:#1e3a8a;margin-bottom:0.818em;line-height:1.6">'+spPreviewText(_spFisse,_spDoppie)+'</div>'+
+      '<button class="sp-gen-btn" id="spGenBtn" onclick="generaSistemaCustom()" '+(n<2?'disabled':'')+'>🔵 Genera Sistema '+_spFisse+'F+'+_spDoppie+'D</button>'+
+    '</div>'+
+    '<div id="spResult"></div>';
+}
+
+function spPreviewText(f,d){
+  var bollette=Math.pow(2,d);
+  var textF = f === 0 ? 'Nessuna fissa, giochi solo le doppie.' : (f + ' fisse obbligatorie.');
+  return '📋 Sistema <b>'+f+'F+'+d+'D</b>: '+bollette+' bollette. '+textF;
+}
+function spStep(tipo,val){
+  if(tipo==='f') _spFisse = Math.max(0, Math.min(3, _spFisse+val));
+  if(tipo==='d') _spDoppie = Math.max(1, Math.min(6, _spDoppie+val));
+  var ef=document.getElementById('spFisse'), ed=document.getElementById('spDoppie');
+  if(ef) ef.textContent=_spFisse;
+  if(ed) ed.textContent=_spDoppie;
+  var prev=document.getElementById('spPreview');
+  if(prev) prev.innerHTML=spPreviewText(_spFisse,_spDoppie);
+  var btn=document.getElementById('spGenBtn');
+  if(btn){btn.textContent='🔵 Genera Sistema '+_spFisse+'F+'+_spDoppie+'D';btn.disabled=false;}
+}
+function generaSistemaCustom(){
+  var res=document.getElementById('spResult');
+  res.innerHTML='<div style="text-align:center;padding:2em"><div class="spinner" style="margin:0 auto"></div></div>';
+  setTimeout(function(){
+    var ris=_costruisciSistema(_spFisse,_spDoppie);
+    var card=_htmlSistemaCard(ris.fisse,ris.doppie,'Sistema Personalizzato',ris.totPartiteOggi);
+    if(!card){
+      var msg='Non abbastanza pronostici oggi. Fisse trovate: '+ris.fisse.length+'/'+_spFisse+'. Doppie trovate: '+ris.doppie.length+'/'+_spDoppie+'.';
+      res.innerHTML=emp('⚠️',msg);return;
+    }
+    res.innerHTML=card;
+    res.scrollIntoView({behavior:'smooth',block:'start'});
+  },300);
+}
+
+// ══════════════════════════════════════════
+// MYCOMBO5
+// ══════════════════════════════════════════
+function renderMyCombo5(){
+  var el=document.getElementById('s-mycombo');
+  var data=palinsestoData.topMyCombo5||[];
+  var h='<div class="sec-hdr"><div class="sec-title">🎰 MyCombo5 del Giorno</div><div class="sec-sub">5 mercati sullo stesso incontro</div></div>';
+  if(!data.length){el.innerHTML=h+emp('🎰','Nessuna MyCombo5 disponibile');return;}
+  data.forEach(function(c,i){
+    var p=c.prob||0;var quota=p>0?(100/p).toFixed(2):'-';
+    var markets=c.myCombo5?c.myCombo5.split(' + '):[];
+    h+='<div class="mycombo-card" style="animation-delay:'+i*0.06+'s">'+
+      '<div class="mycombo-head"><span class="mycombo-badge">'+(c.fascia==='24h'?'🟢 Oggi':'📅 72h')+'</span><span class="mycombo-prob">'+p.toFixed(1)+'%</span></div>'+
+      '<div class="mycombo-match" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">'+teamRow(c.casa,'font-size:1.308em;font-weight:700;color:var(--txt)')+'<span style="color:var(--txt3);font-size:1em;padding:0 2px">vs</span>'+teamRow(c.ospite,'font-size:1.231em;font-weight:600;color:var(--txt2)')+'</div>'+
+      '<div class="mycombo-meta">'+getFlag(c)+' '+(c.campionato||'')+' · '+nds(c.dataStr||c.data)+' · '+nora(c.oraStr,c.dataStr||c.data)+'</div>'+
+      '<div class="mycombo-markets">'+markets.map(function(m,mi){return'<span class="mycombo-chip'+(mi===0?' main':'')+'">'+m+'</span>';}).join('')+'</div>'+
+      '<div class="mycombo-quota"><span>Quota implicita</span><span class="mycombo-quota-val">'+quota+'</span></div>'+
+    '</div>';
+  });
+  el.innerHTML=h;
+}
+
+// ══════════════════════════════════════════
+// DC+OVER / OVER 2.5 / TOP SERIE A / MG
+// ══════════════════════════════════════════
+function renderDCOver(){
+  var el=document.getElementById('s-dcover');
+  var data=filterMatches(palinsestoData.top10_DCOver||[]);
+  var h='<div class="sec-hdr"><div class="sec-title">⚡ DC + Over 2.5</div><div class="sec-sub">Doppia Chance + Over 2.5 correlati</div></div>';
+  if(!data.length){el.innerHTML=h+emp('⚡','Nessun pronostico DC+Over');return;}
+  groupByLeague(data).forEach(function(g){
+    h+='<div class="league-block"><div class="league-hdr"><span class="league-flag">'+g.flag+'</span><span class="league-name">'+g.name+'</span><span class="league-count">+'+g.matches.length+'</span></div>'+g.matches.map(function(m,i){return matchCard(m,i);}).join('')+'</div>';
+  });
+  el.innerHTML=h;
+}
+function renderOver25(){
+  var el=document.getElementById('s-over25');
+  var data=filterMatches(palinsestoData.topOver35||[]);
+  var h='<div class="sec-hdr"><div class="sec-title">⚽ Top 10 Over 2.5</div><div class="sec-sub">Partite con alta probabilità Over 2.5</div></div>';
+  if(!data.length){el.innerHTML=h+emp('⚽','Nessun pronostico Over 2.5');return;}
+  groupByLeague(data).forEach(function(g){
+    h+='<div class="league-block"><div class="league-hdr"><span class="league-flag">'+g.flag+'</span><span class="league-name">'+g.name+'</span><span class="league-count">+'+g.matches.length+'</span></div>'+g.matches.map(function(m,i){return matchCard(m,i);}).join('')+'</div>';
+  });
+  el.innerHTML=h;
+}
+
+function serieACard(m,idx){
+  var p=np(m.prob),val=m.valoreReale||0;
+  var valClass=val>=38?'val-high':val>=28?'val-mid':'val-low';
+  var valLabelClass=val>=38?'sa-val-high':val>=28?'sa-val-mid':'sa-val-low';
+  var q=qDisplay(m);var mbClass=getMBClass(m.mercato);
+  var ds=nds(m.dataStr||m.data),ora=nora(m.oraStr,m.dataStr||m.data);
+  return'<div class="sa-card '+valClass+'" style="animation-delay:'+idx*0.05+'s"><div class="sa-head"><div class="sa-teams"><div class="sa-team-home">'+teamRow(m.casa,"font-size:1.385em;font-weight:800;line-height:1.25")+'<div class="sa-team-away">'+teamRow(m.ospite,"font-size:1.231em;font-weight:600;color:var(--txt2);line-height:1.25")+'</div><div class="sa-time">🇮🇹 Serie A · '+ds+' · '+ora+'</div></div><div class="sa-valore '+valLabelClass+'"><span class="sa-val-num">'+(val>0?val.toFixed(1):'-')+'</span><span class="sa-val-lbl">Valore</span></div></div><div class="sa-body"><span class="sa-mercato-badge '+mbClass+'">'+m.mercato+'</span><div class="sa-prono-box"><span class="sa-prono-val">'+m.pronostico+'</span><span class="sa-prono-meta">'+p+'%</span></div><div class="sa-quota-box'+(q.isReal?' real':'')+'"><div class="sa-quota-val">'+q.val+'</div><div class="sa-quota-lbl">'+(q.isReal?'✓ reale':'impl.')+'</div></div></div>'+(m.secondaScelta&&m.secondaScelta!=='-'&&m.secondaScelta!=='null'?'<div class="sa-second"><span class="sa-second-lbl">2ª scelta:</span><span class="sa-second-val">'+m.secondaScelta+'</span></div>':'')+'<div class="sa-bar"><div class="sa-bar-fill" style="width:'+p+'%;background:'+probBarColor(p)+'"></div></div></div>';
+}
+function renderTopSerieA(){
+  var el=document.getElementById('s-seriea-top');
+  var data=palinsestoData.topSerieA||[];
+  var legend='<div style="background:#fff;border-radius:0.909em;padding:0.909em 1.273em;margin-bottom:0.727em;border-left:0.364em solid #003d82;font-size:0.846em;color:var(--txt2);line-height:1.6"><b style="color:var(--txt)">Come funziona:</b> il mercato con il <b>valore reale calibrato</b> più alto per partita. <span style="font-size:0.9em">Verde ≥38 · Giallo ≥28 · Grigio = standard</span></div>';
+  if(!data.length){el.innerHTML='<div class="sec-hdr"><div class="sec-title">⚽ Top Serie A</div></div>'+legend+emp('⚽','Nessuna partita Serie A');return;}
+  var h='<div class="sec-hdr"><div class="sec-title">⚽ Top Serie A</div><div class="sec-sub">Miglior pronostico calibrato per partita</div></div>'+legend;
+  data.forEach(function(m,i){h+=serieACard(m,i);});
+  el.innerHTML=h;
+}
+
+function renderMG(){
+  var el=document.getElementById('s-mg');
+  var mgc=filterMatches(palinsestoData.top7_MGCasa||[]);
+  var mgo=filterMatches(palinsestoData.top7_MGOspite||[]);
+  var tabs=[{id:'mg-casa',label:'🏠 Casa',data:mgc},{id:'mg-ospite',label:'🚌 Ospite',data:mgo}];
+  var h='<div class="sec-hdr"><div class="sec-title">🎰 Multigol</div><div class="sec-sub">Range da 2 gol in su</div></div><div class="subsec-tabs">'+tabs.map(function(t,i){return'<button class="subsec-tab'+(i===0?' active':'')+'" onclick="switchSubsec(\'mg\',\''+t.id+'\',this)">'+t.label+'</button>';}).join('')+'</div>';
+  tabs.forEach(function(t,i){
+    h+='<div class="subsec-panel'+(i===0?' active':'')+'" id="'+t.id+'">';
+    if(!t.data.length){h+=emp('🎰','Nessun pronostico');}
+    else{groupByLeague(t.data).forEach(function(g){h+='<div class="league-block"><div class="league-hdr"><span class="league-flag">'+g.flag+'</span><span class="league-name">'+g.name+'</span><span class="league-count">+'+g.matches.length+'</span></div>'+g.matches.map(function(m,j){return matchCard(m,j);}).join('')+'</div>';});}
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+function switchSubsec(group,targetId,btn){
+  var parent=btn.closest('.section');
+  parent.querySelectorAll('.subsec-tab').forEach(function(t){t.classList.remove('active');});
+  parent.querySelectorAll('.subsec-panel').forEach(function(p){p.classList.remove('active');});
+  btn.classList.add('active');document.getElementById(targetId).classList.add('active');
+}
+
+// ══════════════════════════════════════════
+// ANALISTA AI
+// ══════════════════════════════════════════
+function caricaAnalistaAI(){
+  var el=document.getElementById('s-analista');if(!el)return;
+  el.innerHTML='<div class="loading" style="padding:4em 1em"><div class="spinner"></div><div class="loading-txt">Caricamento analisi AI...</div></div>';
+  if(!IS_GAS){analistaAIData=_aiDemo();renderAnalistaAI();return;}
+  google.script.run
+    .withSuccessHandler(function(r){analistaAIData=(r&&r.success)?(r.data||[]):[];analistaAITs=(r&&r.aggiornato)?r.aggiornato:'';renderAnalistaAI();})
+    .withFailureHandler(function(){analistaAIData=[];renderAnalistaAI();})
+    .getAnalistaAIData();
+}
+function renderAnalistaAI(){
+  var el=document.getElementById('s-analista');if(!el)return;
+  var dati=analistaAIData||[];
+  var h='<div class="ai-sec-hdr"><div class="ai-sec-title">🤖 Analista AI</div>'+(analistaAITs?'<span class="ai-sec-ts">'+analistaAITs.substring(0,45)+'</span>':'')+'<button class="ai-refresh-btn" onclick="caricaAnalistaAI()">↻ Aggiorna</button></div>';
+  if(!dati.length){
+    h+='<div class="ai-empty-banner"><div style="font-size:3em;margin-bottom:.5em">🤖</div><div style="font-size:1.5em;font-weight:800;color:#c4b5fd;margin-bottom:.4em">Nessuna analisi disponibile</div><div style="font-size:.95em;color:rgba(255,255,255,.6);line-height:1.6">Generata ogni mattina automaticamente.<br>Oppure usa Admin → Analisi AI.</div></div>';
+    el.innerHTML=h;return;
+  }
+  var tot=dati.reduce(function(s,p){return s+(p.picks||[]).length;},0);
+  h+='<div class="ai-picks-counter"><span>'+dati.length+'</span> partite &nbsp;·&nbsp; <span>'+tot+'</span> pick</div>';
+  dati.forEach(function(p,i){h+=_aiMatchCard(p,i);});
+  el.innerHTML=h;
+}
+function _aiMatchCard(p,idx){
+  var logoCasa=ottieniLogo(p.casa||'X');
+  var logoOspite=ottieniLogo(p.ospite||'X');
+  var bestPick=(p.picks&&p.picks.length>0)?p.picks[0]:null;
+  var pickText=bestPick?(bestPick.puntaSu||'').replace(/^PUNTA SU:\s*/i,''):'—';
+  var pickQuota=bestPick&&bestPick.quota?parseFloat(bestPick.quota).toFixed(2):'-';
+  var verdictHtml=p.verdict?'<div style="font-size:11px;font-style:italic;color:#8a939e;margin-top:10px;line-height:1.4">"'+p.verdict+'"</div>':'';
+  var ragHtml=(bestPick&&bestPick.ragionamento)?'<div style="font-size:11px;color:#8a939e;margin-top:12px;padding-top:10px;border-top:1px dashed #e2e6eb;line-height:1.4">💡 <strong>Analisi:</strong> '+bestPick.ragionamento+'</div>':'';
+  var extraBoxesHtml='<div class="op-odds-row">';
+  var extraPicks=(p.picks&&p.picks.length>1)?p.picks.slice(1,4):[];
+  for(var i=0;i<3;i++){
+    if(i<extraPicks.length){
+      var ep=extraPicks[i];
+      var epText=(ep.puntaSu||'').replace(/^PUNTA SU:\s*/i,'');
+      var epMercato=(ep.mercato||'?').substring(0,12).toUpperCase();
+      var epQuota=ep.quota?parseFloat(ep.quota).toFixed(2):'-';
+      extraBoxesHtml+='<div class="op-odd-box" style="background:#f8f9fa;padding:6px 4px;display:flex;flex-direction:column;justify-content:space-between"><div class="op-odd-lbl" style="font-size:9px">'+epMercato+'</div><div style="font-size:11px;font-weight:700;color:var(--dark);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" title="'+epText+'">'+epText+'</div><div class="op-odd-val">'+epQuota+'</div></div>';
+    } else {
+      extraBoxesHtml+='<div class="op-odd-box" style="background:#f8f9fa;opacity:.3;padding:6px 4px"><div class="op-odd-lbl">-</div><div style="font-size:11px;margin-bottom:4px">-</div><div class="op-odd-val">-</div></div>';
+    }
+  }
+  extraBoxesHtml+='</div>';
+  return'<div class="op-card" style="animation-delay:'+((idx||0)*0.04)+'s">'+
+    '<div class="op-card-header" style="margin-bottom:10px"><div class="op-time"><span style="color:#b0b7c0;font-size:16px">☆</span> '+(p.ora||'21:00')+'</div></div>'+
+    '<div class="op-card-body" style="align-items:flex-start">'+
+      '<div class="op-teams" style="flex:1;padding-right:12px">'+
+        '<div class="op-team"><img src="'+logoCasa+'" class="op-team-logo" alt=""> '+p.casa+'</div>'+
+        '<div class="op-team"><img src="'+logoOspite+'" class="op-team-logo" alt=""> '+p.ospite+'</div>'+
+        verdictHtml+
+      '</div>'+
+      '<div class="op-bestbet"><div class="op-bb-head">BestBet</div><div class="op-bb-body"><div class="op-bb-text">PUNTA SU:<strong>'+pickText+'</strong></div><div class="op-bb-q">'+pickQuota+'</div></div></div>'+
+    '</div>'+
+    extraBoxesHtml+ragHtml+
+  '</div>';
+}
+function _aiDemo(){return[{partita:'Juventus vs Inter',casa:'Juventus',ospite:'Inter',campionato:'Serie A',ora:'20:45',verdict:'Derby d\'Italia equilibrato.',picks:[{puntaSu:'PUNTA SU: Under 2.5',mercato:'O/U',quota:1.75,rischio:'Basso',confidenza:74,ragionamento:'Derby tipicamente bloccato. Ultime 5 con Under.'},{puntaSu:'PUNTA SU: 1X',mercato:'1X2',quota:1.50,rischio:'Basso',confidenza:79,ragionamento:'Juve in casa con piccolo vantaggio storico.'},{puntaSu:'PUNTA SU: Under 3.5 Cards',mercato:'Cards',quota:1.68,rischio:'Medio',confidenza:65,ragionamento:'Arbitro permissivo.'}]}];}
+
+// ══════════════════════════════════════════
+// PRONOSTICO A RICHIESTA
+// ══════════════════════════════════════════
+var richSelectedPartita=null,richPartiteList=[],richFilteredList=[];
+function initRichiesta(){
+  richPartiteList=getPartiteOggi().map(function(p,i){p._idx=i;return p;});
+  richFilteredList=richPartiteList.slice(0,25);
+  renderRichiesta();
+}
+function renderRichiesta(){
+  var el=document.getElementById('s-richiesta');
+  var h='<div class="sec-hdr"><div class="sec-title">✨ MyCombo5</div><div class="sec-sub">Partite di oggi — genera la combo da 5 mercati</div></div>';
+  h+='<div id="richTop">';
+  h+='<div class="rich-search"><input type="search" id="richSearch" placeholder="🔍 Cerca squadra..." oninput="filtroRichiesta(this.value)" autocomplete="off"></div>';
+  if(!richPartiteList.length)h+='<div style="background:#fff3e0;border-radius:1em;padding:1em;font-size:1em;color:#78350f;margin-bottom:0.818em">⚠️ Nessuna partita oggi. Aggiorna i dati.</div>';
+  h+='<button class="rich-gen-btn" id="richGenBtn" onclick="generaRichiesta()" disabled>🎰 Genera MyCombo5</button>';
+  h+='<div id="richResult"></div></div>';
+  h+='<div class="rich-list-label">Seleziona una partita di oggi:</div>';
+  h+='<div id="richMatchList">'+buildMatchListHtml(richFilteredList)+'</div>';
+  el.innerHTML=h;
+}
+function buildMatchListHtml(partite){
+  if(!partite.length)return emp('🔍','Nessuna partita trovata');
+  return partite.map(function(p,i){
+    var ds=nds(p.dataStr||p.data),ora=nora(p.oraStr,p.dataStr||p.data);
+    var sel=richSelectedPartita&&richSelectedPartita._idx===p._idx?' selected':'';
+    return'<button class="rich-match-btn'+sel+'" onclick="selezionaRichiesta(this,'+p._idx+')">'+
+      '<div><div class="rich-teams">'+p.casa+' vs '+p.ospite+'</div><div class="rich-meta">'+getFlag(p)+' '+(p.campionato||'')+' · '+ds+' · '+ora+'</div></div>'+
+      '<span class="rich-flag">'+getFlag(p)+'</span></button>';
+  }).join('');
+}
+function filtroRichiesta(q){
+  q=(q||'').toLowerCase().trim();
+  var filtered=q.length<2?richPartiteList.slice(0,25):richPartiteList.filter(function(p){return(p.casa||'').toLowerCase().includes(q)||(p.ospite||'').toLowerCase().includes(q)||(p.campionato||'').toLowerCase().includes(q);});
+  richFilteredList=filtered.slice(0,30);
+  document.getElementById('richMatchList').innerHTML=buildMatchListHtml(richFilteredList);
+}
+function selezionaRichiesta(btn,idx){
+  document.querySelectorAll('.rich-match-btn').forEach(function(b){b.classList.remove('selected');});
+  btn.classList.add('selected');
+  richSelectedPartita=richPartiteList[idx]||null;
+  document.getElementById('richGenBtn').disabled=!richSelectedPartita;
+  document.getElementById('richResult').innerHTML='';
+}
+function generaRichiesta(){
+  if(!richSelectedPartita)return;
+  var resultEl=document.getElementById('richResult');
+  var btn=document.getElementById('richGenBtn');
+  btn.disabled=true;
+  resultEl.innerHTML='<div class="rich-result" style="padding:2.727em 1.818em;text-align:center"><div class="spinner" style="margin:0 auto 1em"></div></div>';
+  setTimeout(function(){resultEl.scrollIntoView({behavior:'smooth',block:'start'});},50);
+  if(!IS_GAS){
+    setTimeout(function(){mostraRisultatoRichiesta({myCombo5:'1 + Over 2.5 + Gol + Corner O8.5 + Cards O3.5',myCombo5Prob:18.4,casa:richSelectedPartita.casa,ospite:richSelectedPartita.ospite});btn.disabled=false;},1200);
+    return;
+  }
+  google.script.run
+    .withSuccessHandler(function(r){btn.disabled=false;if(r&&r.myCombo5)mostraRisultatoRichiesta(r);else resultEl.innerHTML='<div class="rich-result" style="padding:1.818em;text-align:center;color:#dc2626">❌ '+(r&&r.error?r.error:'Dati non disponibili')+'</div>';})
+    .withFailureHandler(function(e){btn.disabled=false;resultEl.innerHTML='<div class="rich-result" style="padding:1.818em;text-align:center;color:#dc2626">❌ Errore: '+(e.message||e)+'</div>';})
+    .getMyCombo5PerPartita(richSelectedPartita.idPartita||richSelectedPartita.casa+'_'+richSelectedPartita.ospite);
+}
+function mostraRisultatoRichiesta(r){
+  var markets=r.myCombo5?r.myCombo5.split(' + '):[];
+  var prob=r.myCombo5Prob||0;var quota=prob>0?(100/prob).toFixed(2):'-';
+  var h='<div class="rich-result"><div class="rich-result-head"><div class="rich-result-title">🎰 MyCombo5 Generata</div><div class="rich-result-match">'+(r.casa||'')+(r.ospite?' vs '+r.ospite:'')+'</div></div><div class="rich-markets">'+
+    markets.map(function(m,i){return'<div class="rich-market-row"><span class="rich-market-name">'+(i+1)+'. '+m+'</span><span class="rich-market-chip">M'+(i+1)+'</span></div>';}).join('')+
+    '<div class="rich-prob-bar"><span class="rich-prob-label">Prob. congiunta</span><div class="rich-prob-track"><div class="rich-prob-fill" style="width:'+Math.min(100,prob*3)+'%"></div></div><span class="rich-prob-num">'+prob.toFixed(1)+'%</span></div>'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-top:1.091em;padding-top:0.909em;border-top:1px solid #f0f0f5"><span style="font-size:0.923em;color:var(--txt2)">Quota implicita</span><span style="font-size:1.692em;font-weight:800;color:#7c3aed">'+quota+'</span></div>'+
+  '</div></div>';
+  document.getElementById('richResult').innerHTML=h;
+  setTimeout(function(){document.getElementById('richResult').scrollIntoView({behavior:'smooth',block:'start'});},100);
+}
+
+// ══════════════════════════════════════════
+// SCHEDINE
+// ══════════════════════════════════════════
+var _schedN=4;
+function renderSchedina(){
+  var el=document.getElementById('s-schedina');if(!el)return;
+  el.innerHTML='<div class="sec-hdr"><div class="sec-title">💰 Schedina a Richiesta</div><div class="sec-sub">Partite di oggi · Inserisci numero e quota target</div></div>'+
+    '<div class="sched-req-card">'+
+      '<div class="sched-req-row"><label class="sched-req-label">Numero di partite</label><div class="sched-req-stepper"><button onclick="schedStepper(-1)">−</button><span id="schedNMatch">'+_schedN+'</span><button onclick="schedStepper(1)">+</button></div></div>'+
+      '<div class="sched-req-row"><label class="sched-req-label">Quota totale target</label><input type="number" id="schedQuota" value="5.00" min="1.5" max="200" step="0.5" class="sched-req-input" placeholder="es. 5.00"></div>'+
+      '<button class="sched-req-btn" onclick="generaSchedina()">⚡ Genera Schedina</button>'+
+    '</div><div id="schedResult"></div>';
+}
+function schedStepper(d){_schedN=Math.max(2,Math.min(10,_schedN+d));var el=document.getElementById('schedNMatch');if(el)el.textContent=_schedN;}
+function generaSchedina(){
+  var quota=parseFloat(document.getElementById('schedQuota').value)||5.0;
+  var n=_schedN;
+  var res=document.getElementById('schedResult');
+  res.innerHTML='<div style="text-align:center;padding:2.727em"><div class="spinner" style="margin:0 auto"></div></div>';
+  var all=getAllMatches().filter(isPartitaFutura).filter(isPartitaOggi).filter(function(m){return m.prob&&np(m.prob)>0;});
+  var seen={};var unique=[];
+  all.forEach(function(m){var k=m.casa+'_'+m.ospite;if(!seen[k]||(np(m.prob)>np(seen[k].prob))){seen[k]=m;}});
+  unique=Object.values(seen);
+  if(unique.length<n){res.innerHTML=emp('⚠️','Partite oggi insufficienti ('+unique.length+' disponibili, richieste '+n+').');return;}
+  unique.sort(function(a,b){return np(b.prob)-np(a.prob);});
+  var targetQuota=quota,bestCombo=null,bestScore=-Infinity;
+  var candidati=unique.slice(0,Math.min(30,unique.length));
+  function combina(start,correnti,probComb,quotaComb){
+    if(correnti.length===n){var distanza=Math.abs(Math.log(quotaComb)-Math.log(targetQuota));var score=probComb*(1/(1+distanza*3));if(score>bestScore){bestScore=score;bestCombo=[].concat(correnti);bestCombo._prob=probComb;bestCombo._quota=quotaComb;}return;}
+    var rem=n-correnti.length;if(start+rem>candidati.length)return;
+    for(var i=start;i<candidati.length;i++){var m=candidati[i];var p=np(m.prob)/100;var q=m.quota&&m.quota>1?m.quota:(p>0?100/np(m.prob):2.0);combina(i+1,[].concat(correnti,[m]),probComb*p,quotaComb*q);}
+  }
+  setTimeout(function(){
+    combina(0,[],1,1);
+    if(!bestCombo){res.innerHTML=emp('❌','Impossibile trovare una combinazione valida');return;}
+    var probTot=Math.round(bestCombo._prob*1000)/10,quotaTot=Math.round(bestCombo._quota*100)/100;
+    var h='<div class="sched-result-card"><div class="sched-result-head"><div class="sched-result-title">⚡ Schedina Generata (Oggi)</div><div class="sched-result-meta">'+n+' partite · obiettivo '+targetQuota.toFixed(2)+'</div></div>'+
+      '<div class="sched-result-stats"><div class="sched-stat-box"><div class="sched-stat-val">'+quotaTot.toFixed(2)+'</div><div class="sched-stat-lbl">Quota tot.</div></div><div class="sched-stat-box"><div class="sched-stat-val green">'+probTot+'%</div><div class="sched-stat-lbl">Prob. comb.</div></div><div class="sched-stat-box"><div class="sched-stat-val '+(Math.abs(quotaTot-targetQuota)<0.5?'green':'orange')+'">'+Math.abs(quotaTot-targetQuota).toFixed(2)+'</div><div class="sched-stat-lbl">Δ quota</div></div></div>';
+    bestCombo.forEach(function(m,i){
+      var p=np(m.prob);var q=m.quota&&m.quota>1?m.quota.toFixed(2):(p>0?(100/p).toFixed(2):'-');
+      var ds=nds(m.dataStr||m.data),ora=nora(m.oraStr,m.dataStr||m.data);
+      h+='<div class="sched-result-row"><div class="sched-row-num">'+(i+1)+'</div><div class="sched-row-info"><div class="sched-row-match">'+teamRow(m.casa)+'<span style="color:var(--txt3);padding:0 3px">vs</span>'+teamRow(m.ospite)+'</div><div class="sched-row-meta">'+getFlag(m)+' '+(m.campionato||'')+' · '+ds+' '+ora+'</div></div><div class="sched-row-right"><div class="sched-row-prono">'+m.pronostico+'</div><div class="sched-row-qbox"><span class="sched-row-q">'+q+'</span><span class="sched-row-p">'+p+'%</span></div></div></div>';
+    });
+    h+='<div class="sched-result-note">💡 Quote implicite. Verifica quelle reali sul bookmaker.</div></div>';
+    res.innerHTML=h;res.scrollIntoView({behavior:'smooth',block:'start'});
+  },300);
+}
+
+// ── Schedina Mercati ──
+function _estraiCandidatiMercati(){
+  function isMercatoOK(mercato,pronostico){
+    var m=(mercato||'').toLowerCase(),pr=(pronostico||'').toLowerCase();
+    if(m.includes('corner')||m.includes('mg')||m.includes('multigol')||m.includes('combo')||m.includes('dc')||m.includes('doppia')||m.includes('mycombo')||m==='1x2'||m.includes('gg')||m.includes('o/u')||m.includes('over')||m.includes('under')||m.includes('tiri')||m.includes('falli'))return true;
+    if(pr==='1'||pr==='2'||pr==='x'||pr==='gol'||pr==='nogol')return true;
+    return false;
+  }
+  var all=(getAllMatches()||[]).filter(isPartitaFutura).filter(isPartitaOggi);
+  var candidati=all.filter(function(m){return isMercatoOK(m.mercato,m.pronostico)&&m.prob&&np(m.prob)>0;});
+  var seen={};
+  candidati.forEach(function(c){var k=c.casa+'_'+c.ospite+'_'+(c.mercato||'');if(!seen[k]||np(c.prob)>np(seen[k].prob))seen[k]=c;});
+  return Object.values(seen);
+}
+var _smN=4;
+function renderSchedinaMercati(){
+  var el=document.getElementById('s-smercati');if(!el)return;
+  el.innerHTML='<div class="sec-hdr"><div class="sec-title">📋 Schedina Mercati</div><div class="sec-sub">Solo mercati Sisal · Partite di oggi</div></div>'+
+    '<div class="smercati-info">✅ Mercati: 1X2 · GG/NG · O/U · Corner · MG Casa · MG Ospite · Combo · DC+Over</div>'+
+    '<div class="sched-req-card">'+
+      '<div class="sched-req-row"><label class="sched-req-label">Numero di partite</label><div class="sched-req-stepper"><button onclick="schedinaMStepper(-1)">−</button><span id="smN">'+_smN+'</span><button onclick="schedinaMStepper(1)">+</button></div></div>'+
+      '<div class="sched-req-row"><label class="sched-req-label">Quota target</label><input type="number" id="smQuota" value="5.00" min="1.5" max="200" step="0.5" class="sched-req-input" placeholder="es. 5.00"></div>'+
+      '<button class="sched-req-btn" style="background:linear-gradient(135deg,#7c3aed,#4a1942)" onclick="generaSchedinaMercati()">📋 Genera Schedina Mercati</button>'+
+    '</div><div id="smResult"></div>';
+}
+function schedinaMStepper(d){_smN=Math.max(2,Math.min(10,_smN+d));var el=document.getElementById('smN');if(el)el.textContent=_smN;}
+function generaSchedinaMercati(){
+  var quota=parseFloat(document.getElementById('smQuota').value)||5.0;
+  var n=_smN;var res=document.getElementById('smResult');
+  res.innerHTML='<div style="text-align:center;padding:2.727em"><div class="spinner" style="margin:0 auto"></div></div>';
+  setTimeout(function(){
+    var candidati=_estraiCandidatiMercati();
+    if(candidati.length<n){res.innerHTML=emp('⚠️','Partite oggi insufficienti ('+candidati.length+' disponibili)');return;}
+    var seen2={};var unique=[];
+    candidati.forEach(function(c){var k=c.casa+'_'+c.ospite;if(!seen2[k]||np(c.prob)>np(seen2[k].prob))seen2[k]=c;});
+    unique=Object.values(seen2).sort(function(a,b){return np(b.prob)-np(a.prob);});
+    if(unique.length<n){res.innerHTML=emp('⚠️','Partite uniche insufficienti ('+unique.length+')');return;}
+    var bestCombo=null,bestScore=-Infinity;
+    var pool=unique.slice(0,Math.min(25,unique.length));
+    function combina(start,correnti,probComb,quotaComb){
+      if(correnti.length===n){var dist=Math.abs(Math.log(quotaComb)-Math.log(quota));var score=probComb*(1/(1+dist*3));if(score>bestScore){bestScore=score;bestCombo=[].concat(correnti);bestCombo._prob=probComb;bestCombo._quota=quotaComb;}return;}
+      var rem=n-correnti.length;if(start+rem>pool.length)return;
+      for(var i=start;i<pool.length;i++){var m=pool[i];var p=np(m.prob)/100;var q=m.quota&&m.quota>1?m.quota:(p>0?1/p:2.0);combina(i+1,[].concat(correnti,[m]),probComb*p,quotaComb*q);}
+    }
+    combina(0,[],1,1);
+    if(!bestCombo){res.innerHTML=emp('❌','Nessuna combinazione trovata');return;}
+    var probTot=Math.round(bestCombo._prob*1000)/10,quotaTot=Math.round(bestCombo._quota*100)/100;
+    var h='<div class="sched-result-card" style="border-color:#7c3aed"><div class="sched-result-head" style="background:linear-gradient(135deg,#4a1942,#7c3aed)"><div class="sched-result-title">📋 Schedina Mercati (Oggi)</div><div class="sched-result-meta">'+n+' partite · target '+quota.toFixed(2)+'</div></div>'+
+      '<div class="sched-result-stats"><div class="sched-stat-box"><div class="sched-stat-val">'+quotaTot.toFixed(2)+'</div><div class="sched-stat-lbl">Quota</div></div><div class="sched-stat-box"><div class="sched-stat-val green">'+probTot+'%</div><div class="sched-stat-lbl">Prob.</div></div><div class="sched-stat-box"><div class="sched-stat-val '+(Math.abs(quotaTot-quota)<1?'green':'orange')+'">'+Math.abs(quotaTot-quota).toFixed(2)+'</div><div class="sched-stat-lbl">Δ</div></div></div>';
+    bestCombo.forEach(function(m,i){
+      var p=np(m.prob);var q=m.quota&&m.quota>1?m.quota.toFixed(2):(p>0?(100/p).toFixed(2):'-');
+      var ds=nds(m.dataStr||m.data),ora=nora(m.oraStr,m.dataStr||m.data);
+      h+='<div class="sched-result-row"><div class="sched-row-num">'+(i+1)+'</div><div class="sched-row-info"><div class="sched-row-match">'+teamRow(m.casa)+'<span style="color:var(--txt3);padding:0 3px">vs</span>'+teamRow(m.ospite)+'</div><div class="sched-row-meta">'+getFlag(m)+' '+(m.campionato||'')+' · '+ds+' '+ora+'</div></div><div class="sched-row-right"><div style="background:#ede9fe;color:#5b21b6;font-size:0.818em;font-weight:800;padding:0.182em 0.545em;border-radius:0.727em;text-align:right">'+(m.mercato||'—')+'</div><div class="sched-row-prono" style="color:#7c3aed">'+m.pronostico+'</div><div class="sched-row-qbox"><span class="sched-row-q" style="background:#7c3aed">'+q+'</span><span class="sched-row-p">'+p+'%</span></div></div></div>';
+    });
+    h+='<div class="sched-result-note">💡 Quote implicite. Verifica quelle reali sul bookmaker.</div></div>';
+    res.innerHTML=h;res.scrollIntoView({behavior:'smooth',block:'start'});
+  },300);
+}
+
+// ── Schedina per Campionato ──
+function _getLegheOggi(){
+  var all=(getAllMatches()||[]).filter(isPartitaFutura).filter(isPartitaOggi);
+  var seen={};
+  all.forEach(function(m){if(m.campionato&&!seen[m.campionato]){seen[m.campionato]={nome:m.campionato,flag:getFlag(m),count:0};}if(m.campionato)seen[m.campionato].count++;});
+  return Object.values(seen).sort(function(a,b){return b.count-a.count;});
+}
+var _scN=3;
+function renderSchedinaCampionato(){
+  var el=document.getElementById('s-scampio');if(!el)return;
+  var leghe=_getLegheOggi();
+  var optsHtml=leghe.length?leghe.map(function(l){return'<option value="'+l.nome.replace(/"/g,'&quot;')+'">'+l.flag+' '+l.nome+' ('+l.count+')</option>';}).join(''):'<option value="">Nessun campionato oggi</option>';
+  el.innerHTML='<div class="sec-hdr"><div class="sec-title">🏆 Schedina per Campionato</div><div class="sec-sub">Solo partite di oggi</div></div>'+
+    '<div class="sched-req-card">'+
+      '<div class="sched-req-row" style="flex-direction:column;align-items:stretch;gap:0.545em"><label class="sched-req-label">Campionato</label><div class="sc-select-wrap"><select id="scLega" class="sc-select" onchange="scAggiornaBadge()"><option value="">— Tutti i campionati di oggi —</option>'+optsHtml+'</select></div><div id="scBadge" class="sc-badge-row"></div></div>'+
+      '<div class="sched-req-row"><label class="sched-req-label">Numero pronostici</label><div class="sched-req-stepper"><button onclick="scStepper(-1)">−</button><span id="scN">'+_scN+'</span><button onclick="scStepper(1)">+</button></div></div>'+
+      '<div class="sched-req-row"><label class="sched-req-label">Quota target</label><input type="number" id="scQuota" value="4.00" min="1.2" max="500" step="0.5" class="sched-req-input"></div>'+
+      '<div style="margin-bottom:0.909em"><div class="sched-req-label" style="margin-bottom:0.364em">Mercati preferiti <span style="font-size:0.8em;color:var(--txt3)">(opz.)</span></div><div class="sc-mercati-wrap" id="scMercati">'+['1X2','O/U','GG/NG','MG Match','MG Casa','MG Ospite','Corner','Combo','DC+Over'].map(function(m){return'<button class="sc-merc-chip" onclick="scToggleMerc(this)" data-m="'+m+'">'+m+'</button>';}).join('')+'</div></div>'+
+      '<button class="sched-req-btn" style="background:linear-gradient(135deg,#0d9488,#0f766e)" onclick="generaSchedinaCampionato()">🏆 Genera Schedina</button>'+
+    '</div><div id="scResult"></div>';
+}
+function scStepper(d){_scN=Math.max(1,Math.min(15,_scN+d));var el=document.getElementById('scN');if(el)el.textContent=_scN;}
+function scToggleMerc(btn){btn.classList.toggle('sc-merc-chip-on');}
+function scAggiornaBadge(){
+  var sel=document.getElementById('scLega'),badge=document.getElementById('scBadge');
+  if(!sel||!badge)return;var val=sel.value;if(!val){badge.innerHTML='';return;}
+  var partite=(getAllMatches().filter(isPartitaOggi)||[]).filter(function(m){return m.campionato===val;});
+  var nP=[...new Set(partite.map(function(m){return m.casa+'_'+m.ospite;}))].length;
+  var flag=partite.length?getFlag(partite[0]):'🏆';
+  badge.innerHTML='<span class="sc-info-badge">'+flag+' '+val+' · '+nP+' partite oggi</span>';
+}
+function generaSchedinaCampionato(){
+  var lega=document.getElementById('scLega').value;
+  var quota=parseFloat(document.getElementById('scQuota').value)||4.0;
+  var n=_scN;var res=document.getElementById('scResult');
+  var selMerc=[];
+  document.querySelectorAll('.sc-merc-chip-on').forEach(function(b){selMerc.push(b.dataset.m);});
+  res.innerHTML='<div style="text-align:center;padding:2.727em"><div class="spinner" style="margin:0 auto"></div></div>';
+  setTimeout(function(){
+    var all=(getAllMatches()||[]).filter(isPartitaFutura).filter(isPartitaOggi);
+    var pool=lega?all.filter(function(m){return m.campionato===lega;}):all;
+    if(selMerc.length>0)pool=pool.filter(function(m){var merc=(m.mercato||'').toLowerCase();return selMerc.some(function(s){return merc.includes(s.toLowerCase());});});
+    var seenP={};
+    pool.forEach(function(m){var k=m.casa+'_'+m.ospite;if(!seenP[k]||np(m.prob)>np(seenP[k].prob))seenP[k]=m;});
+    var unici=Object.values(seenP).sort(function(a,b){return np(b.prob)-np(a.prob);});
+    if(unici.length<n){res.innerHTML=emp('⚠️','Solo '+unici.length+' pronostici oggi'+(lega?' per '+lega:'')+'.');return;}
+    var bestCombo=null,bestScore=-Infinity;
+    var candidates=unici.slice(0,Math.min(30,unici.length));
+    function combina(start,correnti,probC,quotaC){
+      if(correnti.length===n){var dist=Math.abs(Math.log(quotaC)-Math.log(quota));var score=probC*(1/(1+dist*3));if(score>bestScore){bestScore=score;bestCombo=[].concat(correnti);bestCombo._prob=probC;bestCombo._quota=quotaC;}return;}
+      var rem=n-correnti.length;if(start+rem>candidates.length)return;
+      for(var i=start;i<candidates.length;i++){var m=candidates[i];var p=np(m.prob)/100;var q=m.quota&&m.quota>1?m.quota:(p>0?1/p:2.0);combina(i+1,[].concat(correnti,[m]),probC*p,quotaC*q);}
+    }
+    combina(0,[],1,1);
+    if(!bestCombo){res.innerHTML=emp('❌','Impossibile trovare combinazione valida');return;}
+    var probTot=Math.round(bestCombo._prob*1000)/10,quotaTot=Math.round(bestCombo._quota*100)/100;
+    var legaLabel=lega||(selMerc.length?selMerc.join(', '):'Tutti i campionati di oggi');
+    var h='<div class="sched-result-card" style="border-color:#0d9488"><div class="sched-result-head" style="background:linear-gradient(135deg,#134e4a,#0d9488)"><div class="sched-result-title">🏆 '+legaLabel+'</div><div class="sched-result-meta">'+n+' pronostici · target '+quota.toFixed(2)+'</div></div>'+
+      '<div class="sched-result-stats"><div class="sched-stat-box"><div class="sched-stat-val">'+quotaTot.toFixed(2)+'</div><div class="sched-stat-lbl">Quota</div></div><div class="sched-stat-box"><div class="sched-stat-val green">'+probTot+'%</div><div class="sched-stat-lbl">Prob.</div></div><div class="sched-stat-box"><div class="sched-stat-val '+(Math.abs(quotaTot-quota)<1?'green':'orange')+'">'+Math.abs(quotaTot-quota).toFixed(2)+'</div><div class="sched-stat-lbl">Δ</div></div></div>';
+    bestCombo.forEach(function(m,i){
+      var p=np(m.prob);var q=m.quota&&m.quota>1?m.quota.toFixed(2):(p>0?(100/p).toFixed(2):'-');
+      var ds=nds(m.dataStr||m.data),ora=nora(m.oraStr,m.dataStr||m.data);
+      h+='<div class="sched-result-row"><div class="sched-row-num">'+(i+1)+'</div><div class="sched-row-info"><div class="sched-row-match">'+teamRow(m.casa)+'<span style="color:var(--txt3);padding:0 3px">vs</span>'+teamRow(m.ospite)+'</div><div class="sched-row-meta">'+getFlag(m)+' '+(m.campionato||'')+' · '+ds+' '+ora+'</div></div><div class="sched-row-right"><div style="background:#ccfbf1;color:#0f766e;font-size:0.818em;font-weight:800;padding:0.182em 0.545em;border-radius:0.727em;text-align:right">'+(m.mercato||'—')+'</div><div class="sched-row-prono" style="color:#0d9488">'+m.pronostico+'</div><div class="sched-row-qbox"><span class="sched-row-q" style="background:#0d9488">'+q+'</span><span class="sched-row-p">'+p+'%</span></div></div></div>';
+    });
+    h+='<div class="sched-result-note">💡 Quote implicite. Verifica quelle reali sul bookmaker.</div></div>';
+    res.innerHTML=h;res.scrollIntoView({behavior:'smooth',block:'start'});
+  },300);
+}
+
+// ══════════════════════════════════════════
+// LEAGUE FILTER
+// ══════════════════════════════════════════
+var activeLeagueFilter='all';
+function updateLeagueFilters(){
+  var allData=getAllMatches();var seen={},leagues=[];
+  allData.forEach(function(m){if(m&&m.campionato&&!seen[m.campionato]){seen[m.campionato]=true;leagues.push({flag:getFlag(m),name:m.campionato});}});
+  var html='<button class="filter-pill active" data-ln="all">🌍 Tutti</button>';
+  leagues.forEach(function(l){html+='<button class="filter-pill" data-ln="'+l.name.replace(/"/g,'&quot;')+'">'+l.flag+' '+l.name+'</button>';});
+  var container=document.getElementById('filterInner');container.innerHTML=html;
+  container.onclick=function(e){
+    var btn=e.target.closest('.filter-pill');if(!btn)return;
+    container.querySelectorAll('.filter-pill').forEach(function(p){p.classList.remove('active');});
+    btn.classList.add('active');var name=btn.getAttribute('data-ln');activeLeagueFilter=name;
+    if(name!=='all'){renderLeagueView(name);activateSection('s-league');}
+    else{renderTutto();if(currentSection==='s-league')activateSection('s-top5');}
+  };
+}
+function renderLeagueView(leagueName){
+  var el=document.getElementById('s-league');
+  var all=getAllMatches().filter(function(m){return m.campionato===leagueName;});
+  if(activeDateFilter!=='all')all=all.filter(function(m){return nds(m.dataStr||m.data)===activeDateFilter;});
+  var seen={};var unique=[];
+  all.forEach(function(m){var k=(m.casa||'')+'_'+(m.ospite||'')+'_'+(m.mercato||'')+'_'+(m.pronostico||'');if(!seen[k]){seen[k]=true;unique.push(m);}});
+  var byMatch={};
+  unique.forEach(function(m){var key=(m.casa||'')+' vs '+(m.ospite||'');if(!byMatch[key])byMatch[key]={casa:m.casa,ospite:m.ospite,dataStr:m.dataStr,oraStr:m.oraStr,data:m.data,predictions:[]};byMatch[key].predictions.push(m);});
+  var matchList=Object.values(byMatch);
+  var flag=matchList.length>0?getFlag(matchList[0].predictions[0]):'🏆';
+  if(!matchList.length){el.innerHTML='<div class="sec-hdr"><div class="sec-title">'+flag+' '+leagueName+'</div></div>'+emp('🏆','Nessun pronostico');return;}
+  var h='<div class="sec-hdr"><div class="sec-title">'+flag+' '+leagueName+'</div><div class="sec-sub">'+matchList.length+' partite</div></div>';
+  matchList.forEach(function(match){
+    var ds=nds(match.dataStr||match.data),ora=nora(match.oraStr,match.dataStr||match.data);
+    h+='<div style="background:#fff;border-radius:1.273em;margin-bottom:1.091em;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.07)"><div style="background:var(--dark);padding:1.182em 1.455em;display:flex;justify-content:space-between;align-items:center"><div><div style="color:#fff;font-size:1.385em;font-weight:800">'+teamRow(match.casa,"font-size:1.231em;font-weight:800;color:#fff")+'</div><div style="color:rgba(255,255,255,.75);font-size:1.077em;font-weight:600">'+teamRow(match.ospite,"font-size:1.077em;font-weight:600;color:rgba(255,255,255,.75)")+'</div></div><div style="text-align:right;color:rgba(255,255,255,.5);font-size:1em">'+ds+'<br>'+ora+'</div></div>';
+    match.predictions.sort(function(a,b){return np(b.prob)-np(a.prob);}).forEach(function(m){
+      var p=np(m.prob),q=qDisplay(m);
+      h+='<div style="display:flex;align-items:center;justify-content:space-between;padding:1em 1.455em;border-bottom:1px solid #f0f0f5;gap:0.818em"><div style="display:flex;align-items:center;gap:0.636em;flex:1;min-width:0"><span class="sa-mercato-badge '+getMBClass(m.mercato)+'">'+m.mercato+'</span><span style="font-size:1.077em;font-weight:800">'+m.pronostico+'</span></div><div style="display:flex;gap:0.636em;flex-shrink:0"><div style="width:4.545em;background:#f6f6fa;border:1px solid #e0e0ea;border-radius:1.091em;padding:0.364em;text-align:center"><div style="font-size:0.846em;font-weight:700;color:var(--txt3);text-transform:uppercase">Prob</div><div style="font-size:1.538em;font-weight:800;color:var(--txt)">'+p+'%</div></div><div style="width:4.545em;background:'+(q.isReal?'#dcfce7':'#f6f6fa')+';border:1px solid '+(q.isReal?'#bbf7d0':'#e0e0ea')+';border-radius:1.091em;padding:0.364em;text-align:center"><div style="font-size:0.846em;font-weight:700;color:var(--txt3);text-transform:uppercase">'+(q.isReal?'✓':'Quota')+'</div><div style="font-size:1.538em;font-weight:800;color:'+(q.isReal?'#166534':'var(--txt)')+'">'+q.val+'</div></div></div></div>';
+    });
+    h+='</div>';
+  });
+  el.innerHTML=h;
+}
+
+window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();});
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function() {
+  buildDatePillsStatic();        // date pills statiche subito
+  _ssUpdateWidget();             // imposta data odierna nell'iframe SofaScore
+  activateSection('s-widget-live');
+  caricaDati();
+  updateHeaderHeight();
+  window.addEventListener('resize', updateHeaderHeight);
+});
+
+</script>
 </body>
 </html>
