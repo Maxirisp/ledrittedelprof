@@ -5,7 +5,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Le Dritte del Prof</title>
     <style>
-        /* INCOLLA QUI TUTTO IL TUO CSS (quello che avevi nel file Style) */
+     
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{
+  /* COLORI TEMA BLU AGGIORNATI */
+  --bg:#f4f5f7; --card:#ffffff; 
+  --dark:#0A3654; --dark2:#082b43; /* Blu scuro principale */
+  --accent:#0070ba; --accent2:#005a96; /* Blu acceso */
+  --txt:#1A2C43; --txt2:#8a939e; --txt3:#b0b7c0;
+  --border:#e2e6eb; --sw:270px;
+  --primary: #0A3654;
+  --accent-blue: #0070ba;
+  --bg-app: #f4f5f7;
+  --sat:env(safe-area-inset-top,0px);--sab:env(safe-area-inset-bottom,0px);
+}
+
+html,body{font-family:'Roboto',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;-webkit-font-smoothing:antialiased;min-height:100vh;padding-bottom:70px}
+
+/* --- IL TUO CSS ORIGINALE PER NASCONDERE LA SIDEBAR E IMPAGINARE --- */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;backdrop-filter:blur(3px)}
+.overlay.open{display:block}
+.sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sw);background:var(--dark);z-index:300;transform:translateX(-100%);transition:transform .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;overflow:hidden}
+.sidebar.open{transform:translateX(0)}
+.sb-head{padding:calc(44px + var(--sat)) 20px 16px;background:var(--dark2);border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer}
+.sb-logo-img{height:3.636em;width:auto;max-width:17.273em;object-fit:contain;display:block}
+.sb-update{font-size:0.923em;color:rgba(255,255,255,.3);margin-top:0.545em}
+.sb-nav{flex:1;overflow-y:auto;padding:8px 0 calc(20px + var(--sab))}
+.sb-group{font-size:0.846em;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.25);padding:1.273em 1.818em 0.364em}
+.sb-item{width:100%;display:flex;align-items:center;gap:1.091em;padding:1.273em 1.818em;background:none;border:none;color:rgba(255,255,255,.65);font-size:1.308em;font-weight:500;cursor:pointer;text-align:left;transition:all .15s;position:relative}
+.sb-icon{width:3.091em;height:3.091em;border-radius:0.727em;display:flex;align-items:center;justify-content:center;font-size:1.308em;flex-shrink:0;background:rgba(255,255,255,.06)}
+.sb-item.active{color:#fff}
+.sb-item.active .sb-icon{background:var(--accent)}
+.sb-item.active::before{content:'';position:absolute;left:0;top:0.545em;bottom:0.545em;width:3px;background:var(--accent);border-radius:0 3px 3px 0}
+.main{padding-top:var(--hh,130px)}
+.feed{padding:14px 14px calc(50px + var(--sab))}
+.section{display:none}
+.section.active{display:block}
+
+/* --- NUOVO HEADER APP STILE SCREENSHOT --- */
+.app-header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--bg-app);padding-top:var(--sat);box-shadow:0 2px 5px rgba(0,0,0,0.05)}
+.app-header-new { background: var(--primary); color: #fff; padding: 15px; display: flex; align-items: center; font-size: 20px; font-weight: 500; }
+.app-header-new .hbg { background: transparent; border: none; margin-right: 15px; cursor: pointer; display:flex; flex-direction:column; gap:4px;}
+.app-header-new .hbg-line { width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+
+/* --- BARRA DATE SCORREVOLE --- */
+.hdr-dates-app { display: flex; background: #fff; overflow-x: auto; border-bottom: 1px solid #e2e6eb; scrollbar-width: none; }
+.hdr-dates-app::-webkit-scrollbar { display: none; }
+.date-box { flex: 0 0 70px; display: flex; flex-direction: column; align-items: center; padding: 12px 0; cursor: pointer; border-top: 4px solid transparent; color: var(--txt); transition: 0.2s; }
+.date-box.active { background: var(--primary); color: #fff; border-top: 4px solid var(--accent-blue); }
+.date-day { font-size: 11px; text-transform: uppercase; font-weight: 600; margin-bottom: 4px; }
+.date-num { font-size: 18px; font-weight: 800; }
+
+/* --- FILTRI CHIPS --- */
+.app-filters { padding: 10px 15px; background: #fff; display: flex; gap: 10px; overflow-x: auto; border-bottom: 1px solid #e2e6eb; }
+.app-filters::-webkit-scrollbar { display: none; }
+.chip-filter { background: #f0f2f5; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13px; font-weight: 600; color: var(--txt); white-space: nowrap; cursor:pointer;}
+
+/* --- NUOVA CARD PARTITA --- */
+.league-hdr-app { background: transparent; padding: 15px 15px 8px; display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 600; color: var(--txt); }
+.bm-match { display: flex; background: #fff; margin: 0 10px 8px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.08); padding: 12px 0; }
+.bm-left { width: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-right: 1px solid #f0f2f5; flex-shrink: 0; }
+.bm-star { color: #b0b7c0; font-size: 20px; margin-bottom: 8px; }
+.bm-time { background: var(--primary); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 8px; border-radius: 4px; }
+.bm-center { flex: 1; padding: 0 12px; display: flex; flex-direction: column; justify-content: center; gap: 10px; min-width:0; }
+.bm-team { display: flex; align-items: center; font-size: 14px; font-weight: 600; color: #1A2C43; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bm-team img { width: 20px; height: 20px; object-fit: contain; margin-right: 10px; flex-shrink:0; }
+.bm-score { margin-left: auto; font-weight: 700; color: #1A2C43; }
+.bm-right { display: flex; align-items: center; padding-right: 12px; gap: 15px; text-align: center; flex-shrink:0; }
+.bm-prob { font-size: 12px; color: #8a939e; width: 35px; }
+.bm-pick { display: flex; flex-direction: column; align-items: center; justify-content: center; width: 75px; }
+.bm-pick-lbl { font-size: 10px; color: #8a939e; line-height: 1.2; text-align: center; }
+.bm-pick-val { font-size: 13px; font-weight: 800; color: var(--accent-blue); margin-top: 2px; } 
+.bm-quota { font-size: 14px; font-weight: 700; color: #1A2C43; width: 35px; text-align: right; }
+
+/* --- BOTTOM NAV --- */
+.op-bottom-nav{position:fixed;bottom:0;left:0;right:0;background:#fff;display:flex;justify-content:space-around;padding:8px 0 calc(8px + var(--sab));border-top:1px solid var(--border);z-index:400;}
+.op-bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;color:var(--txt2);font-size:10px;font-weight:500;text-decoration:none;cursor:pointer;background:none;border:none}
+.op-bn-item.active{color:var(--accent)}
+.op-bn-icon{font-size:20px;line-height:1}
+
+/* UTILS E LOADER */
+.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:7.273em 1.818em;text-align:center}
+.spinner{width:3.455em;height:3.455em;border:3px solid #e0e0ea;border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+
+/* --- PERSONALIZZAZIONE WIDGET API-FOOTBALL --- */
+api-sports-widget {
+  /* Colori principali */
+  --primary-color: #0A3654;      /* Il tuo blu scuro per gli header del widget */
+  --secondary-color: #0070ba;    /* Il tuo blu acceso per bottoni/dettagli */
+  
+  /* Sfondo e testo */
+  --background-color: #ffffff;   /* Sfondo bianco come le tue card */
+  --text-color: #1A2C43;         /* Il tuo colore del testo scuro */
+  
+  /* Font */
+  --font-family: 'Roboto', sans-serif; 
+  
+  /* Arrotondamento bordi per farlo sembrare come le tue card */
+  --border-radius: 8px;
+}
+
+    /* ── SofaScore widget wrapper ── */
+    .sofascore-widget-wrap {
+      border-radius: 1em;
+      overflow: hidden;
+      background: #111827;
+      margin: 0;
+    }
+    .sofascore-widget-wrap iframe {
+      display: block;
+      width: 100%;
+      border: none;
+      min-height: 560px;
+    }
+    /* Tabs leghe sopra il widget SofaScore */
+    .ss-league-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 12px 6px;
+      background: #0d0d1a;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .ss-league-tabs::-webkit-scrollbar { display: none; }
+    .ss-league-tab {
+      flex-shrink: 0;
+      background: #1e293b;
+      border: none;
+      border-radius: 20px;
+      color: #94a3b8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 5px 10px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background .2s, color .2s;
+    }
+    .ss-league-tab.active {
+      background: var(--accent, #c8f135);
+      color: #0d0d1a;
+    }
+    .ss-date-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px 4px;
+      background: #0d0d1a;
+    }
+    .ss-date-nav-label {
+      font-size: 12px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: .5px;
+    }
+    .ss-date-nav button {
+      background: #1e293b;
+      border: none;
+      border-radius: 8px;
+      color: #94a3b8;
+      font-size: 16px;
+      padding: 4px 10px;
+      cursor: pointer;
+    }
+    .ss-refresh-btn {
+      background: transparent;
+      border: 1px solid #334155;
+      border-radius: 20px;
+      color: #94a3b8;
+      font-size: 11px;
+      padding: 4px 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
         body { background: #0d0d1a; color: white; font-family: sans-serif; }
         .container { padding: 20px; }
     </style>
