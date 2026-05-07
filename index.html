@@ -6,72 +6,385 @@
     <title>Le Dritte del Prof - HUB</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #0A3654; --accent: #0070ba; --bg: #f0f2f5; }
-        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 60px; }
-        header { background: var(--primary); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        .tabs { display: flex; background: white; border-bottom: 1px solid #ddd; position: sticky; top: 50px; z-index: 999; }
-        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: bold; cursor: pointer; color: #666; }
-        .tab-btn.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
-        .content { padding: 10px; }
+        :root {
+            --primary: #0A3654;
+            --accent:  #0070ba;
+            --bg:      #f0f2f5;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: var(--bg);
+            padding-bottom: 70px;
+        }
+
+        /* ── Header ── */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 14px 16px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0,0,0,.3);
+        }
+        header .logo-text {
+            font-weight: 900;
+            font-size: 16px;
+            letter-spacing: 1px;
+        }
+        header .sub {
+            font-size: 11px;
+            opacity: .6;
+            margin-top: 2px;
+        }
+
+        /* ── Tabs ── */
+        .tabs {
+            display: flex;
+            background: white;
+            border-bottom: 2px solid #e0e0e0;
+            position: sticky;
+            top: 55px;
+            z-index: 999;
+            box-shadow: 0 1px 4px rgba(0,0,0,.08);
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 12px 6px;
+            border: none;
+            background: none;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            color: #666;
+            border-bottom: 3px solid transparent;
+            transition: color .2s, border-color .2s;
+        }
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+        }
+
+        /* ── Content ── */
+        .content { padding: 0; }
         .widget-area { display: none; }
         .widget-area.active { display: block; }
-        iframe { width: 100%; border: none; min-height: 1000px; border-radius: 8px; background: white; }
-        .bot-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; border-top: 1px solid #ddd; padding: 10px 0; z-index: 1000; }
-        .nav-link { flex: 1; text-align: center; text-decoration: none; color: #666; font-size: 12px; font-weight: bold; }
+
+        /* ── Widget containers ── */
+        .widget-wrap {
+            background: #fff;
+            border-radius: 0;
+            overflow: hidden;
+            min-height: 600px;
+        }
+
+        /* SoccersAPI widget div */
+        #ls-widget-partite,
+        #ls-widget-live {
+            min-height: 600px;
+        }
+
+        /* FcTables iframe */
+        .fct-iframe {
+            width: 100%;
+            border: none;
+            min-height: 600px;
+            display: block;
+        }
+
+        /* Sotto-tabs campionati per classifiche */
+        .subtabs {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding: 10px 12px 6px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .subtabs::-webkit-scrollbar { display: none; }
+        .subtab-btn {
+            flex-shrink: 0;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 16px;
+            color: #555;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 5px 10px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background .2s, color .2s, border-color .2s;
+        }
+        .subtab-btn.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+
+        /* ── Bottom Nav ── */
+        .bot-nav {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background: white;
+            display: flex;
+            border-top: 1px solid #ddd;
+            padding: 8px 0;
+            z-index: 1000;
+            box-shadow: 0 -2px 8px rgba(0,0,0,.08);
+        }
+        .nav-link {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            color: #666;
+            font-size: 11px;
+            font-weight: 700;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .nav-link.active { color: var(--accent); }
+        .nav-link .nav-icon { font-size: 20px; }
+
+        /* ── Loading placeholder ── */
+        .loading-ph {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 20px;
+            color: #999;
+            font-size: 13px;
+            gap: 12px;
+        }
+        .spinner {
+            width: 32px; height: 32px;
+            border: 3px solid #e0e0e0;
+            border-top-color: var(--accent);
+            border-radius: 50%;
+            animation: spin .8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Info banner ── */
+        .info-banner {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 10px 14px;
+            font-size: 12px;
+            color: #555;
+            line-height: 1.5;
+        }
     </style>
 </head>
 <body>
 
-<header><div style="font-weight: 900; letter-spacing: 1px;">LE DRITTE DEL PROF</div></header>
+<header>
+    <div class="logo-text">LE DRITTE DEL PROF</div>
+    <div class="sub">Livescore &amp; Pronostici</div>
+</header>
 
 <div class="tabs">
-    <button class="tab-btn active" onclick="showWidget(event, 'w-partite')">PARTITE</button>
-    <button class="tab-btn" onclick="showWidget(event, 'w-live')">LIVE</button>
-    <button class="tab-btn" onclick="showWidget(event, 'w-classifiche')">CLASSIFICHE</button>
+    <button class="tab-btn active" onclick="showTab(event, 'w-partite')">⚽ PARTITE</button>
+    <button class="tab-btn"        onclick="showTab(event, 'w-live')">🔴 LIVE</button>
+    <button class="tab-btn"        onclick="showTab(event, 'w-classifica')">📊 CLASSIFICA</button>
 </div>
 
 <div class="content">
+
+    <!-- ══════════════════════════════
+         TAB 1 — PARTITE / OGGI
+         Widget: SoccersAPI (gratuito, senza chiave)
+         URL: https://ls.soccersapi.com/livescore-widget?w=w_default
+         ══════════════════════════════ -->
     <div id="w-partite" class="widget-area active">
-        <iframe src="https://widgets.sofascore.com/embed/fixtures?sport=football&theme=light&lang=it" id="sofa-fix"></iframe>
+        <div class="widget-wrap">
+            <!-- Il widget SoccersAPI si carica tramite script ufficiale -->
+            <div id="ls-widget"
+                 data-w="w_default"
+                 data-height="900"
+                 data-url="https://ls.soccersapi.com/livescore-widget?w=w_default"
+                 class="livescore-widget">
+                <div class="loading-ph">
+                    <div class="spinner"></div>
+                    <span>Caricamento partite...</span>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- ══════════════════════════════
+         TAB 2 — LIVE
+         Stessa fonte SoccersAPI, filtrata su "live"
+         ══════════════════════════════ -->
     <div id="w-live" class="widget-area">
-        <iframe src="https://widgets.sofascore.com/embed/live?sport=football&theme=light&lang=it" id="sofa-live"></iframe>
+        <div class="widget-wrap">
+            <iframe
+                id="iframe-live"
+                class="fct-iframe"
+                style="min-height:700px"
+                src=""
+                loading="lazy"
+                scrolling="yes">
+            </iframe>
+            <div class="loading-ph" id="loading-live">
+                <div class="spinner"></div>
+                <span>Caricamento live...</span>
+            </div>
+        </div>
     </div>
 
-    <div id="w-classifiche" class="widget-area">
-        <iframe src="https://widgets.sofascore.com/embed/standings?sport=football&uniqueTournamentId=7&theme=light&lang=it" id="sofa-stan"></iframe>
+    <!-- ══════════════════════════════
+         TAB 3 — CLASSIFICHE
+         Widget: FcTables (gratuito, iframe diretto)
+         IDs campionati FcTables:
+           Serie A        → league_id=1  country=IT
+           Premier League → league_id=1  country=EN
+           LaLiga         → league_id=1  country=ES
+           Bundesliga     → league_id=1  country=DE
+           Champions Lge  → league_id=1  country=EU (UCL)
+         ══════════════════════════════ -->
+    <div id="w-classifica" class="widget-area">
+
+        <!-- Sotto-tabs campionati -->
+        <div class="subtabs" id="standingsTabs">
+            <button class="subtab-btn active" onclick="showStandings(this, 'serie-a')">🇮🇹 Serie A</button>
+            <button class="subtab-btn" onclick="showStandings(this, 'premier')">🏴󠁧󠁢󠁥󠁮󠁧󠁿 Premier</button>
+            <button class="subtab-btn" onclick="showStandings(this, 'laliga')">🇪🇸 LaLiga</button>
+            <button class="subtab-btn" onclick="showStandings(this, 'bundesliga')">🇩🇪 Bundesliga</button>
+            <button class="subtab-btn" onclick="showStandings(this, 'ligue1')">🇫🇷 Ligue 1</button>
+            <button class="subtab-btn" onclick="showStandings(this, 'champions')">🏆 UCL</button>
+        </div>
+
+        <div class="widget-wrap">
+            <iframe
+                id="standings-iframe"
+                class="fct-iframe"
+                style="min-height:900px"
+                src="https://www.fctables.com/iframe/?league_id=1&country=IT&season=2024&type=league&tz=Europe/Rome&font_size=14&bg_color=ffffff&text_color=333333&odd_bg_color=f5f7fa&border_color=e0e0e0&header_bg_color=0A3654&header_text_color=ffffff"
+                scrolling="no"
+                loading="lazy">
+            </iframe>
+        </div>
     </div>
+
 </div>
 
+<!-- Bottom Nav -->
 <nav class="bot-nav">
-    <a href="#" class="nav-link" style="color: var(--accent);">⚽ SCORES</a>
-    <a href="https://script.google.com/macros/s/AKfycbza_gqnEIbu1GDS8EJTp8HHfwaEvn2ApFlXbZrHUgxqR2fotfi3Ks1pRvTKrL9575-A/exec" class="nav-link" target="_blank">🎯 PRONOSTICI</a>
+    <a href="#" class="nav-link active" onclick="showTab(event,'w-partite');setNavActive(this);return false;">
+        <span class="nav-icon">⚽</span>SCORES
+    </a>
+    <a href="#" class="nav-link" onclick="showTab(event,'w-live');setNavActive(this);return false;">
+        <span class="nav-icon">🔴</span>LIVE
+    </a>
+    <a href="#" class="nav-link" onclick="showTab(event,'w-classifica');setNavActive(this);return false;">
+        <span class="nav-icon">📊</span>CLASSIFICA
+    </a>
+    <a href="https://script.google.com/macros/s/AKfycbza_gqnEIbu1GDS8EJTp8HHfwaEvn2ApFlXbZrHUgxqR2fotfi3Ks1pRvTKrL9575-A/exec"
+       class="nav-link" target="_blank" rel="noopener">
+        <span class="nav-icon">🎯</span>PRONOSTICI
+    </a>
 </nav>
 
+<!--
+  ════════════════════════════════════════════════════
+  SCRIPT SoccersAPI — carica il widget livescore
+  Script ufficiale: basta includere questo tag una volta.
+  Documentazione: https://livescore.soccersapi.com/livescore-widget
+  ════════════════════════════════════════════════════
+-->
 <script>
-    function showWidget(evt, id) {
-        var i, wa, tb;
-        wa = document.getElementsByClassName("widget-area");
-        for (i = 0; i < wa.length; i++) { wa[i].style.display = "none"; }
-        tb = document.getElementsByClassName("tab-btn");
-        for (i = 0; i < tb.length; i++) { tb[i].classList.remove("active"); }
-        document.getElementById(id).style.display = "block";
-        evt.currentTarget.classList.add("active");
-    }
+(function () {
+    // Carica lo script ufficiale SoccersAPI
+    var s = document.createElement('script');
+    s.src = 'https://ls.soccersapi.com/widget/res/w_default/widget.js';
+    s.async = true;
+    s.onload = function () {
+        // Rimuove il placeholder di caricamento quando il widget è pronto
+        var ph = document.querySelector('#ls-widget .loading-ph');
+        if (ph) ph.remove();
+    };
+    document.head.appendChild(s);
+})();
 
-    // Script ufficiale SofaScore per gestire l'altezza dinamica
-    window.addEventListener('message', function (e) {
-        if (e.data.type === 'sofascore-widget-height') {
-            var iframes = document.querySelectorAll('iframe');
-            iframes.forEach(function(f) {
-                // Applica l'altezza solo se l'iframe è visibile per evitare salti grafici
-                if (f.parentElement.style.display !== 'none') {
-                    f.style.height = e.data.value + 'px';
-                }
-            });
+// ── URL classifiche FcTables per campionato ──────────────────────────────────
+// FcTables genera iframe con parametri: league_id, country, season, type
+// Puoi trovare gli ID su: https://www.fctables.com/widgets/
+var STANDINGS_URLS = {
+    'serie-a':    'https://www.fctables.com/iframe/?league_id=1&country=IT&season=2024&type=league&tz=Europe/Rome&font_size=14&bg_color=ffffff&text_color=333333&odd_bg_color=f5f7fa&border_color=e0e0e0&header_bg_color=0A3654&header_text_color=ffffff',
+    'premier':    'https://www.fctables.com/iframe/?league_id=1&country=EN&season=2024&type=league&tz=Europe/Rome&font_size=14&bg_color=ffffff&text_color=333333&odd_bg_color=f5f7fa&border_color=e0e0e0&header_bg_color=0A3654&header_text_color=ffffff',
+    'laliga':     'https://www.fctables.com/iframe/?league_id=1&country=ES&season=2024&type=league&tz=Europe/Rome&font_size=14&bg_color=ffffff&text_color=333333&odd_bg_color=f5f7fa&border_color=e0e0e0&header_bg_color=0A3654&header_text_color=ffffff',
+    'bundesliga': 'https://www.fctables.com/iframe/?league_id=1&country=DE&season=2024&type=league&tz=Europe/Rome&font_size=14&bg_color=ffffff&text_color=333333&odd_bg_color=f5f7fa&border_color=e0e0e0&header_bg_color=0A3654&header_text_color=ffffff',
+    'ligue1':     'https://www.fctables.com/iframe/?league_id=1&country=FR&season=2024&type=league&tz=Europe/Rome&font_size=14&bg_color=ffffff&text_color=333333&odd_bg_color=f5f7fa&border_color=e0e0e0&header_bg_color=0A3654&header_text_color=ffffff',
+    'champions':  'https://www.fctables.com/iframe/?league_id=132&country=EU&season=2024&type=league&tz=Europe/Rome&font_size=14&bg_color=ffffff&text_color=333333&odd_bg_color=f5f7fa&border_color=e0e0e0&header_bg_color=0A3654&header_text_color=ffffff'
+};
+
+// URL live — SoccersAPI ha un filtro "live" nella sua pagina
+// Usiamo direttamente la loro pagina livescore in iframe filtrata per live
+var LIVE_URL = 'https://ls.soccersapi.com/livescore-widget?w=w_default&status=live';
+
+// ── Tab switching ──────────────────────────────────────────────────────────────
+function showTab(evt, id) {
+    // Nascondi tutte le widget-area
+    var areas = document.querySelectorAll('.widget-area');
+    for (var i = 0; i < areas.length; i++) areas[i].style.display = 'none';
+
+    // Rimuovi active dai tab
+    var tabs = document.querySelectorAll('.tab-btn');
+    for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+
+    // Mostra la tab selezionata
+    document.getElementById(id).style.display = 'block';
+    if (evt && evt.currentTarget) evt.currentTarget.classList.add('active');
+
+    // Carica lazy il tab LIVE solo quando viene aperto
+    if (id === 'w-live') {
+        var iframeLive = document.getElementById('iframe-live');
+        var loadingLive = document.getElementById('loading-live');
+        if (iframeLive && !iframeLive.src) {
+            // Usa direttamente la pagina SoccersAPI come iframe (è pubblica)
+            iframeLive.src = LIVE_URL;
+            iframeLive.style.display = 'block';
+            if (loadingLive) loadingLive.style.display = 'none';
         }
-    }, false);
+        if (loadingLive) loadingLive.style.display = 'none';
+    }
+}
+
+// ── Classifiche sotto-tab ──────────────────────────────────────────────────────
+function showStandings(btn, leagueKey) {
+    // Aggiorna classe active sui sotto-tab
+    var btns = document.querySelectorAll('.subtab-btn');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+    btn.classList.add('active');
+
+    // Aggiorna iframe classifiche
+    var iframe = document.getElementById('standings-iframe');
+    if (iframe && STANDINGS_URLS[leagueKey]) {
+        iframe.src = STANDINGS_URLS[leagueKey];
+    }
+}
+
+// ── Bottom nav active state ───────────────────────────────────────────────────
+function setNavActive(el) {
+    var links = document.querySelectorAll('.nav-link');
+    for (var i = 0; i < links.length; i++) links[i].classList.remove('active');
+    el.classList.add('active');
+}
+
+// Inizializzazione: assicura che il tab attivo sia visibile al caricamento
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('w-partite').style.display = 'block';
+    document.getElementById('w-live').style.display = 'none';
+    document.getElementById('w-classifica').style.display = 'none';
+});
 </script>
 
 </body>
