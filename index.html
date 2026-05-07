@@ -3,67 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Le Dritte del Prof - HUB Risultati</title>
-    
+    <title>Le Dritte del Prof - HUB</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
-
     <style>
-        :root {
-            --primary: #0A3654;
-            --accent: #0070ba;
-            --bg: #f0f2f5;
-        }
-
+        :root { --primary: #0A3654; --accent: #0070ba; --bg: #f0f2f5; }
         body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 60px; }
-        
-        /* Header */
         header { background: var(--primary); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
-        
-        /* Menu Tab */
-        .tabs { display: flex; background: white; overflow-x: auto; border-bottom: 1px solid #ddd; sticky; top: 50px; z-index: 999; }
-        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: bold; cursor: pointer; color: #666; white-space: nowrap; }
+        .tabs { display: flex; background: white; border-bottom: 1px solid #ddd; position: sticky; top: 50px; z-index: 999; }
+        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: bold; cursor: pointer; color: #666; }
         .tab-btn.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
-
-        /* Contenuto */
         .content { padding: 10px; }
         .widget-area { display: none; }
         .widget-area.active { display: block; }
-
-        iframe { width: 100%; border: none; min-height: 800px; border-radius: 8px; background: white; }
-
-        /* Navigazione Inferiore */
-        .bot-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; border-top: 1px solid #ddd; padding: 10px 0; }
+        iframe { width: 100%; border: none; min-height: 1000px; border-radius: 8px; background: white; }
+        .bot-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; border-top: 1px solid #ddd; padding: 10px 0; z-index: 1000; }
         .nav-link { flex: 1; text-align: center; text-decoration: none; color: #666; font-size: 12px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<header>
-    <div style="font-weight: 900; letter-spacing: 1px;">LE DRITTE DEL PROF</div>
-</header>
+<header><div style="font-weight: 900; letter-spacing: 1px;">LE DRITTE DEL PROF</div></header>
 
 <div class="tabs">
     <button class="tab-btn active" onclick="showWidget(event, 'w-partite')">PARTITE</button>
     <button class="tab-btn" onclick="showWidget(event, 'w-live')">LIVE</button>
     <button class="tab-btn" onclick="showWidget(event, 'w-classifiche')">CLASSIFICHE</button>
-    <button class="tab-btn" onclick="showWidget(event, 'w-transfer')">MERCATO</button>
 </div>
 
 <div class="content">
     <div id="w-partite" class="widget-area active">
-        <iframe src="https://widgets.sofascore.com/it/embed/fixtures?sport=football&theme=light" id="sofa-fix"></iframe>
+        <iframe src="https://widgets.sofascore.com/embed/fixtures?sport=football&theme=light&lang=it" id="sofa-fix"></iframe>
     </div>
 
     <div id="w-live" class="widget-area">
-        <iframe src="https://widgets.sofascore.com/it/embed/live?sport=football&theme=light" id="sofa-live"></iframe>
+        <iframe src="https://widgets.sofascore.com/embed/live?sport=football&theme=light&lang=it" id="sofa-live"></iframe>
     </div>
 
     <div id="w-classifiche" class="widget-area">
-        <iframe src="https://widgets.sofascore.com/it/embed/standings?sport=football&uniqueTournamentId=7&seasonId=61627&theme=light" id="sofa-stan"></iframe>
-    </div>
-
-    <div id="w-transfer" class="widget-area">
-        <iframe src="https://widgets.sofascore.com/it/embed/transfer-history?theme=light" id="sofa-trans"></iframe>
+        <iframe src="https://widgets.sofascore.com/embed/standings?sport=football&uniqueTournamentId=7&theme=light&lang=it" id="sofa-stan"></iframe>
     </div>
 </div>
 
@@ -76,18 +53,23 @@
     function showWidget(evt, id) {
         var i, wa, tb;
         wa = document.getElementsByClassName("widget-area");
-        for (i = 0; i < wa.length; i++) { wa[i].style.display = "none"; wa[i].classList.remove("active"); }
+        for (i = 0; i < wa.length; i++) { wa[i].style.display = "none"; }
         tb = document.getElementsByClassName("tab-btn");
         for (i = 0; i < tb.length; i++) { tb[i].classList.remove("active"); }
         document.getElementById(id).style.display = "block";
         evt.currentTarget.classList.add("active");
     }
 
-    // Auto-resize SofaScore
+    // Script ufficiale SofaScore per gestire l'altezza dinamica
     window.addEventListener('message', function (e) {
         if (e.data.type === 'sofascore-widget-height') {
             var iframes = document.querySelectorAll('iframe');
-            iframes.forEach(function(f) { f.style.height = e.data.value + 'px'; });
+            iframes.forEach(function(f) {
+                // Applica l'altezza solo se l'iframe è visibile per evitare salti grafici
+                if (f.parentElement.style.display !== 'none') {
+                    f.style.height = e.data.value + 'px';
+                }
+            });
         }
     }, false);
 </script>
