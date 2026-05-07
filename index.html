@@ -1,144 +1,95 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Le Dritte del Prof - Multi Widget</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Le Dritte del Prof - HUB Risultati</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap" rel="stylesheet">
 
-  <style>
-    :root {
-      --primary: #0A3654;
-      --accent: #0070ba;
-      --bg: #f0f2f5;
-      --white: #ffffff;
-    }
+    <style>
+        :root {
+            --primary: #0A3654;
+            --accent: #0070ba;
+            --bg: #f0f2f5;
+        }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Roboto', sans-serif; background: var(--bg); margin: 0; padding-bottom: 60px; }
+        
+        /* Header */
+        header { background: var(--primary); color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; }
+        
+        /* Menu Tab */
+        .tabs { display: flex; background: white; overflow-x: auto; border-bottom: 1px solid #ddd; sticky; top: 50px; z-index: 999; }
+        .tab-btn { flex: 1; padding: 15px; border: none; background: none; font-weight: bold; cursor: pointer; color: #666; white-space: nowrap; }
+        .tab-btn.active { color: var(--accent); border-bottom: 3px solid var(--accent); }
 
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: var(--bg);
-      padding-bottom: 70px;
-    }
+        /* Contenuto */
+        .content { padding: 10px; }
+        .widget-area { display: none; }
+        .widget-area.active { display: block; }
 
-    header {
-      background-color: var(--primary);
-      color: white;
-      padding: 15px;
-      text-align: center;
-      position: fixed;
-      top: 0; width: 100%;
-      z-index: 1000;
-    }
+        iframe { width: 100%; border: none; min-height: 800px; border-radius: 8px; background: white; }
 
-    /* Navigazione Tab Superiore */
-    .tab-container {
-      margin-top: 60px;
-      display: flex;
-      background: white;
-      border-bottom: 1px solid #ddd;
-      position: fixed;
-      top: 0; width: 100%;
-      z-index: 999;
-      overflow-x: auto;
-    }
-
-    .tab-link {
-      flex: 1;
-      padding: 12px;
-      border: none;
-      background: none;
-      font-weight: bold;
-      color: #666;
-      cursor: pointer;
-      white-space: nowrap;
-    }
-
-    .tab-link.active {
-      color: var(--accent);
-      border-bottom: 3px solid var(--accent);
-    }
-
-    .content {
-      margin-top: 110px;
-      padding: 10px;
-    }
-
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-
-    iframe {
-      width: 100%;
-      border: none;
-      min-height: 80vh;
-      border-radius: 8px;
-      background: white;
-    }
-
-    .bottom-nav {
-      position: fixed; bottom: 0; width: 100%;
-      background: white; display: flex; justify-content: space-around;
-      padding: 15px; border-top: 1px solid #ddd; z-index: 1000;
-    }
-
-    .nav-item { text-decoration: none; color: #666; font-weight: bold; font-size: 14px; }
-  </style>
+        /* Navigazione Inferiore */
+        .bot-nav { position: fixed; bottom: 0; width: 100%; background: white; display: flex; border-top: 1px solid #ddd; padding: 10px 0; }
+        .nav-link { flex: 1; text-align: center; text-decoration: none; color: #666; font-size: 12px; font-weight: bold; }
+    </style>
 </head>
 <body>
 
 <header>
-  <h1 style="font-size: 1.1rem; text-transform: uppercase;">Le Dritte del Prof</h1>
+    <div style="font-weight: 900; letter-spacing: 1px;">LE DRITTE DEL PROF</div>
 </header>
 
-<div class="tab-container">
-  <button class="tab-link active" onclick="openTab(event, 'partite')">PARTITE</button>
-  <button class="tab-link" onclick="openTab(event, 'classifiche')">CLASSIFICHE</button>
-  <button class="tab-link" onclick="openTab(event, 'live')">LIVE</button>
+<div class="tabs">
+    <button class="tab-btn active" onclick="showWidget(event, 'w-partite')">PARTITE</button>
+    <button class="tab-btn" onclick="showWidget(event, 'w-live')">LIVE</button>
+    <button class="tab-btn" onclick="showWidget(event, 'w-classifiche')">CLASSIFICHE</button>
+    <button class="tab-btn" onclick="showWidget(event, 'w-transfer')">MERCATO</button>
 </div>
 
 <div class="content">
-  <div id="partite" class="tab-content active">
-    <iframe src="https://widgets.sofascore.com/it/embed/fixtures?sport=football&theme=light" scrolling="no" id="sofa-fixtures"></iframe>
-  </div>
+    <div id="w-partite" class="widget-area active">
+        <iframe src="https://widgets.sofascore.com/it/embed/fixtures?sport=football&theme=light" id="sofa-fix"></iframe>
+    </div>
 
-  <div id="classifiche" class="tab-content">
-    <iframe src="https://widgets.sofascore.com/it/embed/standings?sport=football&uniqueTournamentId=7&seasonId=61627&theme=light" scrolling="no" id="sofa-standings"></iframe>
-  </div>
+    <div id="w-live" class="widget-area">
+        <iframe src="https://widgets.sofascore.com/it/embed/live?sport=football&theme=light" id="sofa-live"></iframe>
+    </div>
 
-  <div id="live" class="tab-content">
-    <iframe src="https://widgets.sofascore.com/it/embed/live?sport=football&theme=light" scrolling="no" id="sofa-live"></iframe>
-  </div>
+    <div id="w-classifiche" class="widget-area">
+        <iframe src="https://widgets.sofascore.com/it/embed/standings?sport=football&uniqueTournamentId=7&seasonId=61627&theme=light" id="sofa-stan"></iframe>
+    </div>
+
+    <div id="w-transfer" class="widget-area">
+        <iframe src="https://widgets.sofascore.com/it/embed/transfer-history?theme=light" id="sofa-trans"></iframe>
+    </div>
 </div>
 
-<nav class="bottom-nav">
-  <a href="#" class="nav-item" style="color: var(--accent);">⚽ SCORES</a>
-  <a href="https://script.google.com/macros/s/AKfycbza_gqnEIbu1GDS8EJTp8HHfwaEvn2ApFlXbZrHUgxqR2fotfi3Ks1pRvTKrL9575-A/exec" class="nav-item" target="_blank">🎯 PRONOSTICI</a>
+<nav class="bot-nav">
+    <a href="#" class="nav-link" style="color: var(--accent);">⚽ SCORES</a>
+    <a href="https://script.google.com/macros/s/AKfycbza_gqnEIbu1GDS8EJTp8HHfwaEvn2ApFlXbZrHUgxqR2fotfi3Ks1pRvTKrL9575-A/exec" class="nav-link" target="_blank">🎯 PRONOSTICI</a>
 </nav>
 
 <script>
-  function openTab(evt, tabName) {
-    var i, tabcontent, tablinks;
-    tabcontent = document.getElementsByClassName("tab-content");
-    for (i = 0; i < tabcontent.length; i++) { tabcontent[i].style.display = "none"; }
-    tablinks = document.getElementsByClassName("tab-link");
-    for (i = 0; i < tablinks.length; i++) { tablinks[i].className = tablinks[i].className.replace(" active", ""); }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
-
-  // Auto-resize per SofaScore
-  window.addEventListener('message', function (e) {
-    if (e.data.type === 'sofascore-widget-height') {
-      const iframes = ['sofa-fixtures', 'sofa-standings', 'sofa-live'];
-      iframes.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.height = e.data.value + 'px';
-      });
+    function showWidget(evt, id) {
+        var i, wa, tb;
+        wa = document.getElementsByClassName("widget-area");
+        for (i = 0; i < wa.length; i++) { wa[i].style.display = "none"; wa[i].classList.remove("active"); }
+        tb = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tb.length; i++) { tb[i].classList.remove("active"); }
+        document.getElementById(id).style.display = "block";
+        evt.currentTarget.classList.add("active");
     }
-  }, false);
+
+    // Auto-resize SofaScore
+    window.addEventListener('message', function (e) {
+        if (e.data.type === 'sofascore-widget-height') {
+            var iframes = document.querySelectorAll('iframe');
+            iframes.forEach(function(f) { f.style.height = e.data.value + 'px'; });
+        }
+    }, false);
 </script>
 
 </body>
