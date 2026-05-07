@@ -3,516 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Dritte Prof">
-  <meta name="theme-color" content="#0A3654">
-  <title>Le Dritte del Prof</title>
-
-  <!-- Google Fonts -->
+  <title>Le Dritte del Prof - Live</title>
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-  <!-- api-sports widget script — DEVE stare nell'head per caricarsi prima -->
-  <script type="module" src="https://widgets.api-sports.io/3.1.0/widgets.js"></script>
-
   <style>
-    /* ─── RESET & VARS ─────────────────────────────────────── */
-    *, *::before, *::after {
-      margin: 0; padding: 0; box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
     :root {
       --primary:   #0A3654;
-      --primary2:  #082b43;
       --accent:    #0070ba;
-      --accent2:   #005a96;
       --bg:        #f0f2f5;
-      --card:      #ffffff;
-      --txt:       #1A2C43;
-      --txt2:      #5a6a7a;
-      --txt3:      #9aa5b0;
-      --border:    #dde2e8;
-      --live:      #e74c3c;
-      --green:     #22c55e;
-      --sat: env(safe-area-inset-top, 0px);
-      --sab: env(safe-area-inset-bottom, 0px);
-      --header-h:  130px; /* aggiornato da JS */
+      --header-h:  100px;
     }
 
-    html, body {
+    body {
       font-family: 'Roboto', sans-serif;
+      margin: 0;
       background: var(--bg);
-      color: var(--txt);
-      overflow-x: hidden;
-      -webkit-font-smoothing: antialiased;
-      min-height: 100vh;
+      padding-bottom: 70px;
     }
 
-    /* ─── HEADER ───────────────────────────────────────────── */
     .app-header {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: var(--bg);
-      padding-top: var(--sat);
-      box-shadow: 0 2px 8px rgba(0,0,0,.08);
-    }
-    .hdr-top {
       background: var(--primary);
-      display: flex; align-items: center;
-      padding: 14px 16px;
-      gap: 12px;
-    }
-    .hdr-logo {
-      width: 32px; height: 32px; border-radius: 8px; object-fit: contain;
-    }
-    .hdr-title {
-      color: #fff; font-size: 18px; font-weight: 700; flex: 1;
-    }
-    .hdr-live-badge {
-      background: var(--live); color: #fff;
-      font-size: 10px; font-weight: 800;
-      padding: 3px 8px; border-radius: 20px;
-      letter-spacing: 1px;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: .5; }
-    }
-
-    /* ─── DATE PILLS ───────────────────────────────────────── */
-    .hdr-dates {
-      display: flex; overflow-x: auto; background: #fff;
-      border-bottom: 1px solid var(--border);
-      scrollbar-width: none;
-    }
-    .hdr-dates::-webkit-scrollbar { display: none; }
-    .date-pill {
-      flex: 0 0 70px; display: flex; flex-direction: column;
-      align-items: center; padding: 10px 4px; cursor: pointer;
-      border-top: 3px solid transparent;
-      transition: all .15s; user-select: none;
-    }
-    .date-pill.active {
-      background: var(--primary); color: #fff;
-      border-top-color: var(--accent);
-    }
-    .date-pill:not(.active):hover { background: #f0f4f8; }
-    .dp-day { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; margin-bottom: 3px; }
-    .dp-num { font-size: 18px; font-weight: 800; }
-
-    /* ─── TAB BAR (sotto le date) ──────────────────────────── */
-    .hdr-tabs {
-      display: flex; background: #fff; overflow-x: auto;
-      border-bottom: 1px solid var(--border); padding: 0 8px;
-      scrollbar-width: none;
-    }
-    .hdr-tabs::-webkit-scrollbar { display: none; }
-    .hdr-tab {
-      flex: 0 0 auto; padding: 10px 14px;
-      border: none; background: none; cursor: pointer;
-      font-size: 13px; font-weight: 600; color: var(--txt2);
-      border-bottom: 3px solid transparent;
-      transition: all .15s; white-space: nowrap;
-    }
-    .hdr-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-
-    /* ─── MAIN CONTENT ─────────────────────────────────────── */
-    .main {
-      padding-top: var(--header-h);
-      padding-bottom: calc(70px + var(--sab));
-      min-height: 100vh;
-    }
-    .section { display: none; }
-    .section.active { display: block; }
-
-    /* ─── WIDGET CONTAINER ─────────────────────────────────── */
-    .widget-wrap {
-      padding: 8px 12px;
-    }
-
-    /* ─── DETAIL CONTAINERS (game, standings, h2h, team) ────── */
-    .detail-box {
-      padding: 0 12px 12px;
-    }
-    .detail-box:empty { display: none; }
-
-    /* ─── EMPTY STATE ──────────────────────────────────────── */
-    .empty-state {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      padding: 60px 24px; text-align: center; color: var(--txt3);
-    }
-    .empty-state .ico { font-size: 48px; margin-bottom: 16px; }
-    .empty-state .lbl { font-size: 15px; font-weight: 500; }
-
-    /* ─── BOTTOM NAV ───────────────────────────────────────── */
-    .bottom-nav {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
-      background: #fff; display: flex; justify-content: space-around;
-      padding: 8px 0 calc(8px + var(--sab));
-      border-top: 1px solid var(--border);
-      box-shadow: 0 -2px 10px rgba(0,0,0,.06);
-    }
-    .bn-item {
-      display: flex; flex-direction: column; align-items: center;
-      gap: 3px; border: none; background: none; cursor: pointer;
-      color: var(--txt3); font-size: 10px; font-weight: 500;
-      padding: 0 16px; transition: color .15s;
-    }
-    .bn-item.active { color: var(--accent); }
-    .bn-icon { font-size: 22px; line-height: 1; }
-
-    /* ─── PRONOSTICI PLACEHOLDER ───────────────────────────── */
-    .prono-coming {
-      margin: 24px 16px;
-      background: var(--primary);
-      border-radius: 16px;
-      padding: 32px 20px;
-      color: #fff;
+      color: white;
+      padding: 15px;
       text-align: center;
-    }
-    .prono-coming h2 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
-    .prono-coming p  { font-size: 13px; opacity: .7; line-height: 1.6; }
-    .prono-link {
-      display: inline-block; margin-top: 20px;
-      background: var(--accent); color: #fff;
-      padding: 12px 28px; border-radius: 30px;
-      font-weight: 700; font-size: 14px; text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
     }
 
-    /* ─── WIDGET THEME OVERRIDE ────────────────────────────── */
-    api-sports-widget[data-theme="dritte"] {
-      --primary-color:     #0070ba;
-      --success-color:     #22c55e;
-      --warning-color:     #f59e0b;
-      --danger-color:      #e74c3c;
-      --light-color:       #9aa5b0;
-      --home-color:        #0070ba;
-      --away-color:        #f59e0b;
-      --text-color:        #1A2C43;
-      --text-color-info:   #5a6a7a;
-      --background-color:  #ffffff;
-      --primary-font-size: 0.75rem;
-      --secondary-font-size: 0.72rem;
-      --button-font-size:  0.78rem;
-      --title-font-size:   0.88rem;
-      --border:            1px solid #dde2e880;
-      --game-height:       2.5rem;
-      --league-height:     2.4rem;
-      --score-size:        2.2rem;
-      --flag-size:         20px;
-      --teams-logo-size:   18px;
-      --teams-logo-size-xl: 4.5rem;
-      --hover:             rgba(0, 112, 186, 0.06);
-      --border-radius:     10px;
+    .main-container {
+      margin-top: 80px;
+      padding: 10px;
+      min-height: 800px; /* Importante per dare spazio al widget */
     }
 
-    /* ─── SPINNER ──────────────────────────────────────────── */
-    .loading-box {
-      display: flex; flex-direction: column;
-      align-items: center; padding: 60px 24px;
+    /* Container specifico per il widget SofaScore */
+    .sofa-widget-container {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: white;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
-    .spinner {
-      width: 36px; height: 36px;
-      border: 3px solid #dde2e8;
-      border-top-color: var(--accent);
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-      margin-bottom: 16px;
+
+    iframe {
+      width: 100%;
+      border: none;
+      min-height: 800px; /* Il widget ha bisogno di altezza */
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-txt { color: var(--txt2); font-size: 13px; }
+
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white; display: flex; justify-content: space-around;
+      padding: 15px; border-top: 1px solid #ddd;
+    }
+    
+    .nav-item { text-decoration: none; color: #555; font-weight: bold; font-size: 14px; }
+    .nav-item.active { color: var(--accent); }
   </style>
 </head>
-
 <body>
 
-<!-- ═══════════════════════════════════════════
-     HEADER FISSO
-════════════════════════════════════════════ -->
-<header class="app-header" id="appHeader">
-
-  <div class="hdr-top">
-    <img class="hdr-logo"
-         src="https://drive.google.com/thumbnail?id=1npk45OU4klUTb6aqEV4L2l-0vP6ylgBi&sz=w64"
-         alt="Logo" onerror="this.style.display='none'">
-    <span class="hdr-title">Le Dritte del Prof</span>
-    <span class="hdr-live-badge" id="liveBadge" style="display:none">● LIVE</span>
-  </div>
-
-  <!-- Date pills — generate da JS -->
-  <div class="hdr-dates" id="datePills"></div>
-
-  <!-- Tab bar — visibile solo nella sezione Partite -->
-  <div class="hdr-tabs" id="hdrTabs" style="display:none">
-    <button class="hdr-tab active" onclick="switchTab('games',this)">⚽ Partite</button>
-    <button class="hdr-tab" onclick="switchTab('leagues',this)">🏆 Campionati</button>
-    <button class="hdr-tab" onclick="switchTab('standings',this)">📊 Classifiche</button>
-    <button class="hdr-tab" onclick="switchTab('h2h',this)">⚔️ H2H</button>
-  </div>
-
+<header class="app-header">
+  <span style="font-weight: 900; font-size: 20px;">LE DRITTE DEL PROF</span>
 </header>
 
-
-<!-- ═══════════════════════════════════════════
-     MAIN CONTENT
-════════════════════════════════════════════ -->
-<main class="main" id="mainContent">
-
-  <!-- ── SEZIONE PARTITE (default) ── -->
-  <div id="s-partite" class="section active">
-
-    <!-- Games widget -->
-    <div class="widget-wrap" id="tab-games">
-      <api-sports-widget data-type="games" data-theme="dritte"></api-sports-widget>
-    </div>
-
-    <!-- Leagues widget -->
-    <div class="widget-wrap" id="tab-leagues" style="display:none">
-      <api-sports-widget data-type="leagues" data-theme="dritte"></api-sports-widget>
-    </div>
-
-    <!-- Standings (viene riempito dal click su una lega) -->
-    <div class="widget-wrap" id="tab-standings" style="display:none">
-      <div id="standings-content"></div>
-      <div class="empty-state" id="standings-empty">
-        <div class="ico">📊</div>
-        <div class="lbl">Clicca su un campionato per vedere la classifica</div>
-      </div>
-    </div>
-
-    <!-- H2H (viene riempito dal click su una partita) -->
-    <div class="widget-wrap" id="tab-h2h" style="display:none">
-      <div id="h2h-content"></div>
-      <div class="empty-state" id="h2h-empty">
-        <div class="ico">⚔️</div>
-        <div class="lbl">Clicca su una partita per vedere H2H</div>
-      </div>
-    </div>
-
-    <!-- Dettaglio partita — si apre sotto le partite al click -->
-    <div class="detail-box" id="game-content"></div>
-
-  </div>
-
-  <!-- ── SEZIONE PRONOSTICI ── -->
-  <div id="s-pronostici" class="section">
-    <div class="prono-coming">
-      <h2>🎯 Pronostici del Prof</h2>
-      <p>I pronostici sono generati dal motore predittivo<br>
-         Poisson/ELO/Dixon-Coles con ML calibration.<br>
-         Accedi al pannello completo qui sotto.</p>
-      <a class="prono-link"
-         href="https://script.google.com/macros/s/AKfycbza_gqnEIbu1GDS8EJTp8HHfwaEvn2ApFlXbZrHUgxqR2fotfi3Ks1pRvTKrL9575-A/exec"
-         target="_blank">
-        Apri Pronostici →
-      </a>
+<main class="main-container">
+  
+  <div class="sofa-widget-container">
+    <div id="sofascore-widget">
+      <iframe 
+        id="sofascore-iframe"
+        src="https://widgets.sofascore.com/it/embed/fixtures?sport=football&theme=light" 
+        scrolling="no"
+        style="height: 1000px;">
+      </iframe>
     </div>
   </div>
-
-  <!-- ── SEZIONE TEAM (aperta da widget) ── -->
-  <div id="s-team" class="section">
-    <div class="detail-box" id="team-content">
-      <div class="empty-state">
-        <div class="ico">🏟️</div>
-        <div class="lbl">Cerca una squadra dalla sezione Campionati</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ── SEZIONE PLAYER MODAL ── -->
-  <!-- I player si aprono in modale, gestito dal widget -->
 
 </main>
 
-
-<!-- ═══════════════════════════════════════════
-     BOTTOM NAV
-════════════════════════════════════════════ -->
 <nav class="bottom-nav">
-  <button class="bn-item active" id="bn-partite" onclick="goSection('s-partite', this)">
-    <span class="bn-icon">⚽</span>
-    <span>Partite</span>
-  </button>
-  <button class="bn-item" id="bn-pronostici" onclick="goSection('s-pronostici', this)">
-    <span class="bn-icon">🎯</span>
-    <span>Pronostici</span>
-  </button>
-  <button class="bn-item" id="bn-team" onclick="goSection('s-team', this)">
-    <span class="bn-icon">🏟️</span>
-    <span>Squadre</span>
-  </button>
+  <a href="#" class="nav-item active">⚽ LIVE</a>
+  <a href="https://script.google.com/macros/s/AKfycbza_gqnEIbu1GDS8EJTp8HHfwaEvn2ApFlXbZrHUgxqR2fotfi3Ks1pRvTKrL9575-A/exec" class="nav-item">🎯 PRONO</a>
 </nav>
 
-
-<!-- ═══════════════════════════════════════════
-     CONFIG WIDGET — DEVE stare FUORI da tutto,
-     prima del </body>
-════════════════════════════════════════════ -->
-<api-sports-widget
-  data-type="config"
-  data-sport="football"
-  data-key="7006efdf852a18f03fc97f0383559831"
-  data-theme="dritte"
-  data-lang="it"
-  data-show-logos="true"
-  data-show-errors="true"
-  data-refresh="60"
-  data-standings="true"
-  data-favorite="true"
-  data-player-trophies="true"
-  data-player-statistics="true"
-  data-player-injuries="true"
-  data-team-squad="true"
-  data-team-statistics="true"
-  data-tab="games"
-  data-target-game="#game-content"
-  data-target-standings="#standings-content"
-  data-target-league="#league-content"
-  data-target-team="#team-content"
-  data-target-h2h="#h2h-content"
-  data-target-player="modal">
-</api-sports-widget>
-
-
-<!-- ═══════════════════════════════════════════
-     JAVASCRIPT
-════════════════════════════════════════════ -->
 <script>
-  // ─── COSTANTI ─────────────────────────────────────────────
-  const DAYS_IT = ['DOM','LUN','MAR','MER','GIO','VEN','SAB'];
-
-  // ─── HEADER HEIGHT ────────────────────────────────────────
-  function updateHeaderHeight() {
-    const h = document.getElementById('appHeader').offsetHeight;
-    document.getElementById('mainContent').style.paddingTop = h + 'px';
-  }
-
-  // ─── DATE PILLS ───────────────────────────────────────────
-  function buildDatePills() {
-    const container = document.getElementById('datePills');
-    const now = new Date();
-    let html = '';
-
-    for (let i = -1; i <= 5; i++) {
-      const d = new Date(now.getFullYear(), now.getMonth(), now.getDate() + i);
-      const isToday = i === 0;
-      const label = isToday ? 'OGGI' : DAYS_IT[d.getDay()];
-      const num   = d.getDate();
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const day   = String(num).padStart(2, '0');
-      const apiDate = `${d.getFullYear()}-${month}-${day}`;
-
-      html += `
-        <div class="date-pill ${isToday ? 'active' : ''}"
-             data-date="${apiDate}"
-             onclick="selectDate(this)">
-          <span class="dp-day">${label}</span>
-          <span class="dp-num">${num}</span>
-        </div>`;
+  // Script per gestire l'altezza automatica dell'iframe SofaScore
+  window.addEventListener('message', function (e) {
+    if (e.data.type === 'sofascore-widget-height') {
+      document.getElementById('sofascore-iframe').style.height = e.data.value + 'px';
     }
-    container.innerHTML = html;
-  }
-
-  // ─── SELEZIONA DATA ───────────────────────────────────────
-  function selectDate(pill) {
-    // 1. Aggiorna stile pills
-    document.querySelectorAll('.date-pill').forEach(p => p.classList.remove('active'));
-    pill.classList.add('active');
-
-    const dateVal = pill.dataset.date;
-
-    // 2. Aggiorna il widget games: ricrea l'elemento con la nuova data
-    const gamesWrap = document.getElementById('tab-games');
-    gamesWrap.innerHTML = `
-      <api-sports-widget
-        data-type="games"
-        data-date="${dateVal}"
-        data-theme="dritte">
-      </api-sports-widget>`;
-  }
-
-  // ─── TAB (games / leagues / standings / h2h) ─────────────
-  function switchTab(tabName, btn) {
-    // Stile bottoni
-    document.querySelectorAll('.hdr-tab').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    // Mostra/nascondi pannelli
-    const tabs = {
-      games:     'tab-games',
-      leagues:   'tab-leagues',
-      standings: 'tab-standings',
-      h2h:       'tab-h2h'
-    };
-    Object.values(tabs).forEach(id => {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    });
-    const target = document.getElementById(tabs[tabName]);
-    if (target) target.style.display = 'block';
-
-    // Nascondi il dettaglio partita quando si cambia tab
-    document.getElementById('game-content').innerHTML = '';
-
-    updateHeaderHeight();
-  }
-
-  // ─── SEZIONE BOTTOM NAV ───────────────────────────────────
-  function goSection(sid, btn) {
-    // Sections
-    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    document.getElementById(sid).classList.add('active');
-
-    // Nav items
-    document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-
-    // Mostra/nascondi tab bar (solo in s-partite)
-    const tabs = document.getElementById('hdrTabs');
-    tabs.style.display = sid === 's-partite' ? 'flex' : 'none';
-
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    updateHeaderHeight();
-  }
-
-  // ─── LIVE BADGE ───────────────────────────────────────────
-  // Mostra il badge LIVE se l'orario attuale è in fascia partite (13-24)
-  function updateLiveBadge() {
-    const h = new Date().getHours();
-    const badge = document.getElementById('liveBadge');
-    if (badge) badge.style.display = (h >= 13 && h <= 23) ? 'inline-block' : 'none';
-  }
-
-  // ─── OSSERVA #game-content per lo scroll automatico ───────
-  // Quando il widget riempie #game-content, scrolla verso di esso
-  const gameObserver = new MutationObserver(mutations => {
-    for (const m of mutations) {
-      if (m.addedNodes.length) {
-        const el = document.getElementById('game-content');
-        if (el && el.children.length) {
-          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        break;
-      }
-    }
-  });
-  document.addEventListener('DOMContentLoaded', () => {
-    const gc = document.getElementById('game-content');
-    if (gc) gameObserver.observe(gc, { childList: true });
-  });
-
-  // ─── INIT ─────────────────────────────────────────────────
-  document.addEventListener('DOMContentLoaded', () => {
-    buildDatePills();
-    updateLiveBadge();
-    updateHeaderHeight();
-    window.addEventListener('resize', updateHeaderHeight);
-
-    // Aggiorna live badge ogni 5 minuti
-    setInterval(updateLiveBadge, 5 * 60 * 1000);
-  });
+  }, false);
 </script>
 
 </body>
